@@ -23,12 +23,12 @@ export function DefaultTable<T>(props: IDefaultTableProps<T>) {
   const { classes } = useStyles();
   const theme = useMantineTheme();
   const {
-    minHeight, // eslint-disable-line unused-imports/no-unused-vars
-    noRecordsText, // eslint-disable-line unused-imports/no-unused-vars
-    defaultColumnRender, // eslint-disable-line unused-imports/no-unused-vars
-    highlightOnHover, // eslint-disable-line unused-imports/no-unused-vars
-    noRecordsIcon, // eslint-disable-line unused-imports/no-unused-vars
-    groups, // eslint-disable-line unused-imports/no-unused-vars
+    minHeight, 
+    noRecordsText, 
+    defaultColumnRender, 
+    highlightOnHover, 
+    noRecordsIcon, 
+    groups, 
     paginationProps,
     emptyTableStateProps,
     columns,
