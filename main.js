@@ -21,7 +21,11 @@ function createWindow() {
   });
 
   // win.loadFile("index.html");
-  win.loadURL(startUrl)
+  if (isProd) {
+    win.loadURL(startUrl)
+  } else {
+    win.loadURL(`http://localhost:${3000}`)
+  }
 }
 
 app.whenReady().then(() => {
