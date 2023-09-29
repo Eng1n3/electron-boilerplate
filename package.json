@@ -6,7 +6,8 @@
   "scripts": {
     "install:all": "concurrently \"cd app && npm install\" \"npm install\"",
     "start:dev": "concurrently \"cd app && npm run dev\" \"electronmon .\"",
-    "build:front": "cd app && npm run build",
+    "build:front:dev": "cd app && npm run build",
+    "build:front": "NODE_ENV=prod cd app && npm run build",
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "electron-forge package",
