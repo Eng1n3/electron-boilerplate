@@ -9,5 +9,10 @@ contextBridge.exposeInMainWorld("versions", {
 });
 
 contextBridge.exposeInMainWorld("dapobudLocal", {
-  getDapobud: () => ipcRenderer.invoke('get-dapobud')
-})
+  getDapobud: () => ipcRenderer.invoke("get-dapobud"),
+});
+
+contextBridge.exposeInMainWorld("contact", {
+  getContact: (value) => ipcRenderer.invoke("get-contact", value),
+  createContact: (value) => ipcRenderer.invoke("create-contact", value),
+});
