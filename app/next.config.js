@@ -1,12 +1,11 @@
 const { join } = require("path");
 
-const isProd = process.env.NODE_ENV === 'prod' ? true : false
-
+const isDev = process.env.NODE_ENV === "dev";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  assetPrefix: isProd ? join(process.cwd(), "out") : undefined,
+  assetPrefix: isDev ? undefined : join(process.cwd(), "out"),
 };
 
 module.exports = nextConfig;

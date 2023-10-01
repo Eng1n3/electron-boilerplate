@@ -2,7 +2,17 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
 
-const isProd = process.env.NODE_ENV === 'prod' ? true : false
+const {
+  PrismaClient: DapobudLocalPrisma,
+} = require("./prisma/generated/dapobud-local");
+const {
+  PrismaClient: DapobudServerPrisma,
+} = require("./prisma/generated/dapobud-server");
+const { dapobudLocalIpc } = require("./ipc/dapobud-local.ipc");
+
+const dapobudLocalPrisma = new DapobudLocalPrisma();
+const dapobudServerPrisma = new DapobudServerPrisma();
+const isDev = process.env.NODE_ENV === "dev";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -11,7 +21,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
-      webSecurity: false
+      webSecurity: false,
     },
   });
 
@@ -20,25 +30,24 @@ function createWindow() {
     protocol: "file",
   });
 
-  // win.loadFile("index.html");
-  win.loadURL(startUrl)
-  // if (isProd) {
-  //   win.loadURL(startUrl)
-  // } else {
-  //   win.loadURL(`http://localhost:${3000}`)
-  // }
+  if (isDev) {
+    win.webContents.openDevTools();
+    win.loadURL(`http://localhost:${3000}`);
+  } else {
+    win.loadURL(startUrl);
+  }
 }
 
-app.whenReady().then(() => {
-  ipcMain.handle("ping", () => "pong");
+(async () => {
+  await app.whenReady();
   createWindow();
-
+  await dapobudLocalIpc(ipcMain, dapobudLocalPrisma);
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
   });
-});
+})();
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

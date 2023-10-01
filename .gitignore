@@ -4,3 +4,7 @@
 /app/out
 /app/next-env.d.ts
 /out/
+/prisma/*.sqlite
+/prisma/*.sqlite-journal
+/prisma/generated
+/prisma/migrations

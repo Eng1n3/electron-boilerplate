@@ -7,3 +7,7 @@ contextBridge.exposeInMainWorld("versions", {
   ping: () => "pong",
   // we can also expose variables, not just functions
 });
+
+contextBridge.exposeInMainWorld("dapobudLocal", {
+  getDapobud: () => ipcRenderer.invoke('get-dapobud')
+})

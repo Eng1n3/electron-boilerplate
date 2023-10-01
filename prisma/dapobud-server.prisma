@@ -1,0 +1,3100 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "./generated/dapobud-server"
+}
+
+datasource dapobud_server {
+  provider = "sqlite"
+  url      = "file:./dapobud-server.sqlite"
+}
+
+model administrasi_desa {
+  kode_desa      String    @id
+  kode_kecamatan String
+  desa           String
+  aktif          Boolean   @default(true)
+  created_at     DateTime  @default(now())
+  created_by     String
+  updated_at     DateTime  @default(now())
+  updated_by     String?
+  deleted_at     DateTime?
+  deleted_by     String?
+}
+
+model administrasi_kabupaten {
+  kode_kabupaten String    @id
+  kode_provinsi  String
+  kabupaten      String
+  aktif          Boolean   @default(true)
+  created_at     DateTime  @default(now())
+  created_by     String
+  updated_at     DateTime  @default(now())
+  updated_by     String?
+  deleted_at     DateTime?
+  deleted_by     String?
+}
+
+model administrasi_kecamatan {
+  kode_kecamatan String    @id
+  kode_kabupaten String
+  kecamatan      String
+  aktif          Boolean   @default(true)
+  created_at     DateTime  @default(now())
+  created_by     String
+  updated_at     DateTime  @default(now())
+  updated_by     String?
+  deleted_at     DateTime?
+  deleted_by     String?
+}
+
+model administrasi_provinsi {
+  kode_provinsi String    @id
+  provinsi      String
+  aktif         Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  created_by    String
+  updated_at    DateTime  @default(now())
+  updated_by    String?
+  deleted_at    DateTime?
+  deleted_by    String?
+}
+
+model cb {
+  id           String    @id
+  dapobud_id   String    @unique(map: "cb_dapobud_id_unique")
+  master_cb_id String
+  cb_id        String
+  created_at   DateTime  @default(now())
+  created_by   String
+  updated_at   DateTime  @default(now())
+  updated_by   String?
+  deleted_at   DateTime?
+  deleted_by   String?
+  dapobud      dapobud   @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb    master_cb @relation(fields: [master_cb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model cb_bangunan {
+  id                                                                                             String                              @id
+  dapobud_id                                                                                     String                              @unique(map: "cb_bangunan_dapobud_id_unique")
+  nama_lokal                                                                                     String
+  sifat_id                                                                                       String
+  lokasi_penemuan_provinsi_id                                                                    String?
+  lokasi_penemuan_kabupaten_id                                                                   String?
+  lokasi_penemuan_kecamatan_id                                                                   String?
+  lokasi_penemuan_desa_id                                                                        String?
+  lokasi_penemuan_alamat                                                                         String?
+  lokasi_penemuan_latitude                                                                       Float?
+  lokasi_penemuan_longitude                                                                      Float?
+  lokasi_penemuan_ketinggian                                                                     Int?
+  periode_id                                                                                     String?
+  gaya_arsitektur_id                                                                             String?
+  bentuk_atap_id                                                                                 String?
+  waktu_pembuatan_periode                                                                        String?
+  waktu_pembuatan_sebelum_sesudah                                                                String?
+  waktu_pembuatan                                                                                Int?
+  warna                                                                                          String?
+  dimensi_panjang                                                                                Int?
+  dimensi_panjang_satuan_id                                                                      String?
+  dimensi_lebar                                                                                  Int?
+  dimensi_lebar_satuan_id                                                                        String?
+  dimensi_tinggi                                                                                 Int?
+  dimensi_tinggi_satuan_id                                                                       String?
+  dimensi_luas_bangunan                                                                          Int?
+  dimensi_luas_bangunan_satuan_id                                                                String?
+  dimensi_luas_tanah                                                                             Int?
+  dimensi_luas_tanah_satuan_id                                                                   String?
+  keutuhan_id                                                                                    String?
+  terpelihara                                                                                    Boolean?                            @default(false)
+  dipugar                                                                                        String
+  riwayat_pemugaran                                                                              String?
+  telah_diadaptasi                                                                               String?                             @default("Tidak Ada Penambahan")
+  riwayat_adaptasi                                                                               String?
+  status_kepemilikan_id                                                                          String?
+  nama_pemilik                                                                                   String?
+  lokasi_pemilik_provinsi_id                                                                     String?
+  lokasi_pemilik_kabupaten_id                                                                    String?
+  lokasi_pemilik_kecamatan_id                                                                    String?
+  lokasi_pemilik_desa_id                                                                         String?
+  lokasi_pemilik_alamat                                                                          String?
+  lokasi_pemilik_latitude                                                                        Float?
+  lokasi_pemilik_longitude                                                                       Float?
+  perolehan_id                                                                                   String?
+  status_pengelolaan_id                                                                          String?
+  nama_pengelola                                                                                 String?
+  lokasi_pengelola_provinsi_id                                                                   String?
+  lokasi_pengelola_kabupaten_id                                                                  String?
+  lokasi_pengelola_kecamatan_id                                                                  String?
+  lokasi_pengelola_desa_id                                                                       String?
+  lokasi_pengelola_alamat                                                                        String?
+  lokasi_pengelola_latitude                                                                      Float?
+  lokasi_pengelola_longitude                                                                     Float?
+  deskripsi_sejarah                                                                              String?
+  batas_zonasi_utara                                                                             String?
+  batas_zonasi_barat                                                                             String?
+  batas_zonasi_selatan                                                                           String?
+  batas_zonasi_timur                                                                             String?
+  aktif                                                                                          Boolean                             @default(true)
+  created_at                                                                                     DateTime                            @default(now())
+  created_by                                                                                     String
+  updated_at                                                                                     DateTime                            @default(now())
+  updated_by                                                                                     String?
+  deleted_at                                                                                     DateTime?
+  deleted_by                                                                                     String?
+  master_cb_bangunan_bentuk_atap                                                                 master_cb_bangunan_bentuk_atap?     @relation(fields: [bentuk_atap_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dapobud                                                                                        dapobud                             @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_bangunan_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi         master_cb_satuan_dimensi?           @relation("cb_bangunan_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_lebar_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_bangunan_dimensi_luas_bangunan_satuan_idTomaster_cb_satuan_dimensi master_cb_satuan_dimensi?           @relation("cb_bangunan_dimensi_luas_bangunan_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_luas_bangunan_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_bangunan_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi    master_cb_satuan_dimensi?           @relation("cb_bangunan_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_luas_tanah_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_bangunan_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi       master_cb_satuan_dimensi?           @relation("cb_bangunan_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_panjang_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_bangunan_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi        master_cb_satuan_dimensi?           @relation("cb_bangunan_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_tinggi_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_bangunan_gaya_arsitektur                                                             master_cb_bangunan_gaya_arsitektur? @relation(fields: [gaya_arsitektur_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_keutuhan                                                                             master_cb_keutuhan?                 @relation(fields: [keutuhan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_periode                                                                              master_cb_periode?                  @relation(fields: [periode_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_perolehan                                                                            master_cb_perolehan?                @relation(fields: [perolehan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_sifat                                                                                master_cb_sifat                     @relation(fields: [sifat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_status_kepemilikan                                                                   master_cb_status_kepemilikan?       @relation(fields: [status_kepemilikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_pengelolaan                                                                          master_cb_pengelolaan?              @relation(fields: [status_pengelolaan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relasi_cb_bangunan_bahan                                                                       relasi_cb_bangunan_bahan[]
+  relasi_cb_bangunan_fungsi                                                                      relasi_cb_bangunan_fungsi[]
+  relasi_cb_bangunan_ornamen                                                                     relasi_cb_bangunan_ornamen[]
+  relasi_cb_bangunan_tanda                                                                       relasi_cb_bangunan_tanda[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model cb_benda {
+  id                                                                                    String                        @id
+  dapobud_id                                                                            String                        @unique(map: "cb_benda_dapobud_id_unique")
+  nama_lokal                                                                            String
+  kelompok_objek_id                                                                     String
+  sifat_benda_id                                                                        String
+  lokasi_penemuan_provinsi_id                                                           String?
+  lokasi_penemuan_kabupaten_id                                                          String?
+  lokasi_penemuan_kecamatan_id                                                          String?
+  lokasi_penemuan_desa_id                                                               String?
+  lokasi_penemuan_alamat                                                                String?
+  lokasi_penemuan_latitude                                                              Float?
+  lokasi_penemuan_longitude                                                             Float?
+  lokasi_penemuan_ketinggian                                                            Int?
+  periode_benda_id                                                                      String?
+  waktu_pembuatan_periode                                                               String?
+  waktu_pembuatan_sebelum_sesudah                                                       String?
+  waktu_pembuatan                                                                       Int?
+  warna                                                                                 String?
+  dimensi_panjang                                                                       Int?
+  dimensi_panjang_satuan_id                                                             String?
+  dimensi_lebar                                                                         Int?
+  dimensi_lebar_satuan_id                                                               String?
+  dimensi_tinggi                                                                        Int?
+  dimensi_tinggi_satuan_id                                                              String?
+  dimensi_tebal                                                                         Int?
+  dimensi_tebal_satuan_id                                                               String?
+  diameter_badan                                                                        Int?
+  diameter_badan_satuan_id                                                              String?
+  diameter_kaki                                                                         Int?
+  diameter_kaki_satuan_id                                                               String?
+  diameter_atas                                                                         Int?
+  diameter_atas_satuan_id                                                               String?
+  dimensi_berat                                                                         Int?
+  dimensi_berat_satuan                                                                  String?
+  dimensi_volume                                                                        Int?
+  dimensi_volume_satuan                                                                 String?
+  keutuhan_id                                                                           String?
+  terpelihara                                                                           Boolean?                      @default(false)
+  dipugar                                                                               String
+  riwayat_pemugaran                                                                     String?
+  telah_diadaptasi                                                                      String?                       @default("Tidak Ada Penambahan")
+  riwayat_adaptasi                                                                      String?
+  status_kepemilikan_id                                                                 String?
+  nama_pemilik                                                                          String?
+  lokasi_pemilik_provinsi_id                                                            String?
+  lokasi_pemilik_kabupaten_id                                                           String?
+  lokasi_pemilik_kecamatan_id                                                           String?
+  lokasi_pemilik_desa_id                                                                String?
+  lokasi_pemilik_alamat                                                                 String?
+  lokasi_pemilik_latitude                                                               Float?
+  lokasi_pemilik_longitude                                                              Float?
+  perolehan_benda_id                                                                    String?
+  status_pengelolaan_id                                                                 String?
+  nama_pengelola                                                                        String?
+  lokasi_pengelola_provinsi_id                                                          String?
+  lokasi_pengelola_kabupaten_id                                                         String?
+  lokasi_pengelola_kecamatan_id                                                         String?
+  lokasi_pengelola_desa_id                                                              String?
+  lokasi_pengelola_alamat                                                               String?
+  lokasi_pengelola_latitude                                                             Float?
+  lokasi_pengelola_longitude                                                            Float?
+  deskripsi_sejarah                                                                     String?
+  aktif                                                                                 Boolean                       @default(true)
+  created_at                                                                            DateTime                      @default(now())
+  created_by                                                                            String
+  updated_at                                                                            DateTime                      @default(now())
+  updated_by                                                                            String?
+  deleted_at                                                                            DateTime?
+  deleted_by                                                                            String?
+  dapobud                                                                               dapobud                       @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_benda_diameter_atas_satuan_idTomaster_cb_satuan_dimensi   master_cb_satuan_dimensi?     @relation("cb_benda_diameter_atas_satuan_idTomaster_cb_satuan_dimensi", fields: [diameter_atas_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_benda_diameter_badan_satuan_idTomaster_cb_satuan_dimensi  master_cb_satuan_dimensi?     @relation("cb_benda_diameter_badan_satuan_idTomaster_cb_satuan_dimensi", fields: [diameter_badan_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_benda_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi   master_cb_satuan_dimensi?     @relation("cb_benda_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi", fields: [diameter_kaki_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_benda_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi   master_cb_satuan_dimensi?     @relation("cb_benda_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_lebar_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_benda_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi master_cb_satuan_dimensi?     @relation("cb_benda_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_panjang_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_benda_dimensi_tebal_satuan_idTomaster_cb_satuan_dimensi   master_cb_satuan_dimensi?     @relation("cb_benda_dimensi_tebal_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_tebal_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_benda_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi  master_cb_satuan_dimensi?     @relation("cb_benda_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_tinggi_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_benda_kelompok                                                              master_cb_benda_kelompok      @relation(fields: [kelompok_objek_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_keutuhan                                                                    master_cb_keutuhan?           @relation(fields: [keutuhan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_periode                                                                     master_cb_periode?            @relation(fields: [periode_benda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_perolehan                                                                   master_cb_perolehan?          @relation(fields: [perolehan_benda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_sifat                                                                       master_cb_sifat               @relation(fields: [sifat_benda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_status_kepemilikan                                                          master_cb_status_kepemilikan? @relation(fields: [status_kepemilikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_pengelolaan                                                                 master_cb_pengelolaan?        @relation(fields: [status_pengelolaan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relasi_cb_benda_bahan                                                                 relasi_cb_benda_bahan[]
+  relasi_cb_benda_hiasan                                                                relasi_cb_benda_hiasan[]
+  relasi_cb_benda_kelompok                                                              relasi_cb_benda_kelompok[]
+  relasi_cb_benda_tanda                                                                 relasi_cb_benda_tanda[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model cb_kawasan {
+  id                             String                        @id
+  dapobud_id                     String                        @unique(map: "cb_kawasan_dapobud_id_unique")
+  nama_lokal                     String
+  sifat_id                       String
+  lokasi_penemuan_provinsi_id    String?
+  lokasi_penemuan_kabupaten_id   String?
+  lokasi_penemuan_kecamatan_id   String?
+  lokasi_penemuan_desa_id        String?
+  lokasi_penemuan_alamat         String?
+  lokasi_penemuan_latitude       Float?
+  lokasi_penemuan_longitude      Float?
+  lokasi_penemuan_ketinggian     Int?
+  periode_id                     String?
+  dimensi_luas_kawasan           Int?
+  dimensi_luas_kawasan_satuan_id String?
+  keutuhan_id                    String?
+  terpelihara                    Boolean?                      @default(false)
+  dipugar                        String
+  riwayat_pemugaran              String?
+  telah_diadaptasi               String?                       @default("Tidak Ada Penambahan")
+  riwayat_adaptasi               String?
+  status_kepemilikan_id          String?
+  nama_pemilik                   String?
+  lokasi_pemilik_provinsi_id     String?
+  lokasi_pemilik_kabupaten_id    String?
+  lokasi_pemilik_kecamatan_id    String?
+  lokasi_pemilik_desa_id         String?
+  lokasi_pemilik_alamat          String?
+  lokasi_pemilik_latitude        Float?
+  lokasi_pemilik_longitude       Float?
+  status_pengelolaan_id          String?
+  nama_pengelola                 String?
+  lokasi_pengelola_provinsi_id   String?
+  lokasi_pengelola_kabupaten_id  String?
+  lokasi_pengelola_kecamatan_id  String?
+  lokasi_pengelola_desa_id       String?
+  lokasi_pengelola_alamat        String?
+  lokasi_pengelola_latitude      Float?
+  lokasi_pengelola_longitude     Float?
+  deskripsi_sejarah              String?
+  batas_zonasi_utara             String?
+  batas_zonasi_barat             String?
+  batas_zonasi_selatan           String?
+  batas_zonasi_timur             String?
+  aktif                          Boolean                       @default(true)
+  created_at                     DateTime                      @default(now())
+  created_by                     String
+  updated_at                     DateTime                      @default(now())
+  updated_by                     String?
+  deleted_at                     DateTime?
+  deleted_by                     String?
+  perolehan_id                   String?
+  dapobud                        dapobud                       @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi       master_cb_satuan_dimensi?     @relation(fields: [dimensi_luas_kawasan_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_keutuhan             master_cb_keutuhan?           @relation(fields: [keutuhan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_periode              master_cb_periode?            @relation(fields: [periode_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_perolehan            master_cb_perolehan?          @relation(fields: [perolehan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_sifat                master_cb_sifat               @relation(fields: [sifat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_status_kepemilikan   master_cb_status_kepemilikan? @relation(fields: [status_kepemilikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_pengelolaan          master_cb_pengelolaan?        @relation(fields: [status_pengelolaan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relasi_cb_kawasan_fungsi       relasi_cb_kawasan_fungsi[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model cb_situs {
+  id                                                                                       String                        @id
+  dapobud_id                                                                               String                        @unique(map: "cb_situs_dapobud_id_unique")
+  nama_lokal                                                                               String
+  sifat_id                                                                                 String
+  lokasi_penemuan_provinsi_id                                                              String?
+  lokasi_penemuan_kabupaten_id                                                             String?
+  lokasi_penemuan_kecamatan_id                                                             String?
+  lokasi_penemuan_desa_id                                                                  String?
+  lokasi_penemuan_alamat                                                                   String?
+  lokasi_penemuan_latitude                                                                 Float?
+  lokasi_penemuan_longitude                                                                Float?
+  lokasi_penemuan_ketinggian                                                               Int?
+  periode_id                                                                               String?
+  dimensi_panjang                                                                          Int?
+  dimensi_panjang_satuan_id                                                                String?
+  dimensi_lebar                                                                            Int?
+  dimensi_lebar_satuan_id                                                                  String?
+  dimensi_luas_tanah                                                                       Int?
+  dimensi_luas_tanah_satuan_id                                                             String?
+  keutuhan_id                                                                              String?
+  terpelihara                                                                              Boolean?                      @default(false)
+  dipugar                                                                                  String
+  riwayat_pemugaran                                                                        String?
+  telah_diadaptasi                                                                         String?                       @default("Tidak Ada Penambahan")
+  riwayat_adaptasi                                                                         String?
+  status_kepemilikan_id                                                                    String?
+  nama_pemilik                                                                             String?
+  lokasi_pemilik_provinsi_id                                                               String?
+  lokasi_pemilik_kabupaten_id                                                              String?
+  lokasi_pemilik_kecamatan_id                                                              String?
+  lokasi_pemilik_desa_id                                                                   String?
+  lokasi_pemilik_alamat                                                                    String?
+  lokasi_pemilik_latitude                                                                  Float?
+  lokasi_pemilik_longitude                                                                 Float?
+  status_pengelolaan_id                                                                    String?
+  nama_pengelola                                                                           String?
+  lokasi_pengelola_provinsi_id                                                             String?
+  lokasi_pengelola_kabupaten_id                                                            String?
+  lokasi_pengelola_kecamatan_id                                                            String?
+  lokasi_pengelola_desa_id                                                                 String?
+  lokasi_pengelola_alamat                                                                  String?
+  lokasi_pengelola_latitude                                                                Float?
+  lokasi_pengelola_longitude                                                               Float?
+  deskripsi_sejarah                                                                        String?
+  batas_zonasi_utara                                                                       String?
+  batas_zonasi_barat                                                                       String?
+  batas_zonasi_selatan                                                                     String?
+  batas_zonasi_timur                                                                       String?
+  aktif                                                                                    Boolean                       @default(true)
+  created_at                                                                               DateTime                      @default(now())
+  created_by                                                                               String
+  updated_at                                                                               DateTime                      @default(now())
+  updated_by                                                                               String?
+  deleted_at                                                                               DateTime?
+  deleted_by                                                                               String?
+  perolehan_id                                                                             String?
+  dapobud                                                                                  dapobud                       @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_situs_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi      master_cb_satuan_dimensi?     @relation("cb_situs_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_lebar_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_situs_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi master_cb_satuan_dimensi?     @relation("cb_situs_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_luas_tanah_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_situs_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi    master_cb_satuan_dimensi?     @relation("cb_situs_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_panjang_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_keutuhan                                                                       master_cb_keutuhan?           @relation(fields: [keutuhan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_periode                                                                        master_cb_periode?            @relation(fields: [periode_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_perolehan                                                                      master_cb_perolehan?          @relation(fields: [perolehan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_sifat                                                                          master_cb_sifat               @relation(fields: [sifat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_status_kepemilikan                                                             master_cb_status_kepemilikan? @relation(fields: [status_kepemilikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_pengelolaan                                                                    master_cb_pengelolaan?        @relation(fields: [status_pengelolaan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relasi_cb_situs_kelompok                                                                 relasi_cb_situs_kelompok[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model cb_struktur {
+  id                                                                                             String                        @id
+  dapobud_id                                                                                     String                        @unique(map: "cb_struktur_dapobud_id_unique")
+  nama_lokal                                                                                     String
+  sifat_id                                                                                       String
+  lokasi_penemuan_provinsi_id                                                                    String?
+  lokasi_penemuan_kabupaten_id                                                                   String?
+  lokasi_penemuan_kecamatan_id                                                                   String?
+  lokasi_penemuan_desa_id                                                                        String?
+  lokasi_penemuan_alamat                                                                         String?
+  lokasi_penemuan_latitude                                                                       Float?
+  lokasi_penemuan_longitude                                                                      Float?
+  lokasi_penemuan_ketinggian                                                                     Int?
+  periode_id                                                                                     String?
+  waktu_pembuatan_periode                                                                        String?
+  waktu_pembuatan_sebelum_sesudah                                                                String?
+  waktu_pembuatan                                                                                Int?
+  warna                                                                                          String?
+  dimensi_panjang                                                                                Int?
+  dimensi_panjang_satuan_id                                                                      String?
+  dimensi_lebar                                                                                  Int?
+  dimensi_lebar_satuan_id                                                                        String?
+  dimensi_tinggi                                                                                 Int?
+  dimensi_tinggi_satuan_id                                                                       String?
+  diameter_badan                                                                                 Int?
+  diameter_badan_satuan_id                                                                       String?
+  diameter_kaki                                                                                  Int?
+  diameter_kaki_satuan_id                                                                        String?
+  diameter_atas                                                                                  Int?
+  diameter_atas_satuan_id                                                                        String?
+  dimensi_luas_struktur                                                                          Int?
+  dimensi_luas_struktur_satuan_id                                                                String?
+  dimensi_luas_tanah                                                                             Int?
+  dimensi_luas_tanah_satuan_id                                                                   String?
+  keutuhan_id                                                                                    String?
+  terpelihara                                                                                    Boolean?                      @default(false)
+  dipugar                                                                                        String
+  riwayat_pemugaran                                                                              String?
+  telah_diadaptasi                                                                               String?                       @default("Tidak Ada Penambahan")
+  riwayat_adaptasi                                                                               String?
+  status_kepemilikan_id                                                                          String?
+  nama_pemilik                                                                                   String?
+  lokasi_pemilik_provinsi_id                                                                     String?
+  lokasi_pemilik_kabupaten_id                                                                    String?
+  lokasi_pemilik_kecamatan_id                                                                    String?
+  lokasi_pemilik_desa_id                                                                         String?
+  lokasi_pemilik_alamat                                                                          String?
+  lokasi_pemilik_latitude                                                                        Float?
+  lokasi_pemilik_longitude                                                                       Float?
+  perolehan_id                                                                                   String?
+  status_pengelolaan_id                                                                          String?
+  nama_pengelola                                                                                 String?
+  lokasi_pengelola_provinsi_id                                                                   String?
+  lokasi_pengelola_kabupaten_id                                                                  String?
+  lokasi_pengelola_kecamatan_id                                                                  String?
+  lokasi_pengelola_desa_id                                                                       String?
+  lokasi_pengelola_alamat                                                                        String?
+  lokasi_pengelola_latitude                                                                      Float?
+  lokasi_pengelola_longitude                                                                     Float?
+  deskripsi_sejarah                                                                              String?
+  batas_zonasi_utara                                                                             String?
+  batas_zonasi_barat                                                                             String?
+  batas_zonasi_selatan                                                                           String?
+  batas_zonasi_timur                                                                             String?
+  aktif                                                                                          Boolean                       @default(true)
+  created_at                                                                                     DateTime                      @default(now())
+  created_by                                                                                     String
+  updated_at                                                                                     DateTime                      @default(now())
+  updated_by                                                                                     String?
+  deleted_at                                                                                     DateTime?
+  deleted_by                                                                                     String?
+  dapobud                                                                                        dapobud                       @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_diameter_atas_satuan_idTomaster_cb_satuan_dimensi         master_cb_satuan_dimensi?     @relation("cb_struktur_diameter_atas_satuan_idTomaster_cb_satuan_dimensi", fields: [diameter_atas_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_diameter_badan_satuan_idTomaster_cb_satuan_dimensi        master_cb_satuan_dimensi?     @relation("cb_struktur_diameter_badan_satuan_idTomaster_cb_satuan_dimensi", fields: [diameter_badan_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi         master_cb_satuan_dimensi?     @relation("cb_struktur_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi", fields: [diameter_kaki_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi         master_cb_satuan_dimensi?     @relation("cb_struktur_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_lebar_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_dimensi_luas_struktur_satuan_idTomaster_cb_satuan_dimensi master_cb_satuan_dimensi?     @relation("cb_struktur_dimensi_luas_struktur_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_luas_struktur_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi    master_cb_satuan_dimensi?     @relation("cb_struktur_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_luas_tanah_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi       master_cb_satuan_dimensi?     @relation("cb_struktur_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_panjang_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_satuan_dimensi_cb_struktur_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi        master_cb_satuan_dimensi?     @relation("cb_struktur_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi", fields: [dimensi_tinggi_satuan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_keutuhan                                                                             master_cb_keutuhan?           @relation(fields: [keutuhan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_periode                                                                              master_cb_periode?            @relation(fields: [periode_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_perolehan                                                                            master_cb_perolehan?          @relation(fields: [perolehan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_sifat                                                                                master_cb_sifat               @relation(fields: [sifat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_status_kepemilikan                                                                   master_cb_status_kepemilikan? @relation(fields: [status_kepemilikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_pengelolaan                                                                          master_cb_pengelolaan?        @relation(fields: [status_pengelolaan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relasi_cb_struktur_bahan                                                                       relasi_cb_struktur_bahan[]
+  relasi_cb_struktur_fungsi                                                                      relasi_cb_struktur_fungsi[]
+  relasi_cb_struktur_ornamen                                                                     relasi_cb_struktur_ornamen[]
+  relasi_cb_struktur_tanda                                                                       relasi_cb_struktur_tanda[]
+}
+
+model clients {
+  id                         String                       @id
+  user_id                    Int
+  email                      String                       @unique(map: "clients_email_unique")
+  name                       String
+  user_level                 String
+  upt                        String?
+  provinsi                   String?
+  kabupaten                  String?
+  provinsi_id                String?
+  kabupaten_id               String?
+  created_at                 DateTime?
+  updated_at                 DateTime?
+  rekomendasi_penetapan_tacb rekomendasi_penetapan_tacb[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model dapobud {
+  id                                                                    String                          @id
+  created_by                                                            String
+  nama                                                                  String
+  nomor                                                                 String?
+  dapobud_tipe                                                          String
+  deleted_at                                                            DateTime?
+  created_at                                                            DateTime?
+  updated_at                                                            DateTime?
+  provinsi_id                                                           String?
+  kabupaten_id                                                          String?
+  level                                                                 String?
+  deleted_by                                                            String?
+  nomor_prefix                                                          String?
+  nomor_tipe                                                            String?
+  nomor_level_pendataan                                                 String?
+  nomor_level_verval                                                    String?
+  nomor_tanggal_verval                                                  String?
+  nomor_increment                                                       String?
+  nomor_dapobud                                                         String?                         @unique(map: "nomor_dapobud_unique")
+  status_verval                                                         String                          @default("draft")
+  status_penetapan                                                      String?
+  status_pemeringkatan                                                  String?
+  status_penghapusan                                                    String?
+  status_wbtb                                                           String?
+  parent_opk_id                                                         String?
+  cb                                                                    cb?
+  cb_bangunan                                                           cb_bangunan?
+  cb_benda                                                              cb_benda?
+  cb_kawasan                                                            cb_kawasan?
+  cb_situs                                                              cb_situs?
+  cb_struktur                                                           cb_struktur?
+  dapobud                                                               dapobud?                        @relation("dapobudTodapobud", fields: [parent_opk_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  other_dapobud                                                         dapobud[]                       @relation("dapobudTodapobud")
+  lk                                                                    lk?
+  pemanfaatan_relasi_pemanfaatan_relasi_destination_dapobud_idTodapobud pemanfaatan_relasi[]            @relation("pemanfaatan_relasi_destination_dapobud_idTodapobud")
+  pemanfaatan_relasi_pemanfaatan_relasi_source_dapobud_idTodapobud      pemanfaatan_relasi[]            @relation("pemanfaatan_relasi_source_dapobud_idTodapobud")
+  pemutakhiran                                                          pemutakhiran[]
+  penetapan_cb                                                          penetapan_cb[]
+  rekomendasi_penetapan_dapobud                                         rekomendasi_penetapan_dapobud[]
+  rekomendasi_wbtb                                                      rekomendasi_wbtb[]
+  sarpras                                                               sarpras?
+  tb                                                                    tb?
+  verval                                                                verval[]
+  wbtb_dapobud                                                          wbtb_dapobud[]
+
+  @@unique([nomor_prefix, nomor_tipe, nomor_level_pendataan, nomor_level_verval, nomor_tanggal_verval, nomor_increment])
+}
+
+model dapobud_level {
+  id         String    @id
+  level      String
+  sub_level  String
+  kode       String
+  keterangan String?
+  aktif      Boolean   @default(true)
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+}
+
+model dapobud_master {
+  id         String    @id
+  tipe       String
+  prefix     String
+  kode       String
+  keterangan String
+  aktif      Boolean   @default(true)
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+}
+
+model failed_jobs {
+  id         BigInt   @id @default(autoincrement())
+  uuid       String   @unique(map: "failed_jobs_uuid_unique")
+  connection String
+  queue      String
+  payload    String
+  exception  String
+  failed_at  DateTime @default(now())
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model lk {
+  id                              String                          @id
+  nama_lembaga                    String
+  dapobud_id                      String                          @unique(map: "lk_dapobud_id_unique")
+  jenis_id                        String
+  status_hukum                    String
+  provinsi_id                     String?
+  kabupaten_id                    String?
+  kecamatan_id                    String?
+  desa_id                         String?
+  alamat                          String?
+  latitude                        Float?
+  longitude                       Float?
+  nomor_hp                        String?
+  email                           String?
+  alamat_website                  String?
+  akun_facebook                   String?
+  akun_twitter                    String?
+  akun_instagram                  String?
+  akun_youtube                    String?
+  status_kepemilikan_id           String?
+  nama_pemilik                    String?
+  deskripsi                       String?
+  created_at                      DateTime                        @default(now())
+  created_by                      String
+  updated_at                      DateTime                        @default(now())
+  updated_by                      String?
+  deleted_at                      DateTime?
+  deleted_by                      String?
+  nomor_identitas                 String?
+  tanggal_berdiri                 DateTime?
+  tujuan                          String?
+  logo_path                       String?
+  foto_papan_nama_path            String?
+  foto_bangunan_tampak_depan_path String?
+  foto_bangunan_tampak_dalam_path String?
+  dapobud                         dapobud                         @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_lk_jenis                 master_lk_jenis                 @relation(fields: [jenis_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_lk_status_kepemilikan    master_lk_status_kepemilikan?   @relation(fields: [status_kepemilikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relasi_lk_dokumen_legalitas     relasi_lk_dokumen_legalitas[]
+  relasi_lk_riwayat_aktivitas     relasi_lk_riwayat_aktivitas[]
+  relasi_lk_riwayat_penghargaan   relasi_lk_riwayat_penghargaan[]
+  wbtb_lembaga                    wbtb_lembaga[]
+}
+
+model master_cb {
+  id         String    @id
+  nama_cb    String
+  urutan     Int
+  aktif      Boolean   @default(true)
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+  cb         cb[]
+}
+
+model master_cb_bangunan_bahan {
+  id                       String                     @id
+  nama                     String
+  aktif                    Boolean                    @default(true)
+  created_at               DateTime                   @default(now())
+  created_by               String
+  updated_at               DateTime                   @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  relasi_cb_bangunan_bahan relasi_cb_bangunan_bahan[]
+}
+
+model master_cb_bangunan_bentuk_atap {
+  id          String        @id
+  nama        String
+  aktif       Boolean       @default(true)
+  created_at  DateTime      @default(now())
+  created_by  String
+  updated_at  DateTime      @default(now())
+  updated_by  String?
+  deleted_at  DateTime?
+  deleted_by  String?
+  cb_bangunan cb_bangunan[]
+}
+
+model master_cb_bangunan_fungsi {
+  id                        String                      @id
+  kelompok                  String
+  nama                      String
+  aktif                     Boolean                     @default(true)
+  created_at                DateTime                    @default(now())
+  created_by                String
+  updated_at                DateTime                    @default(now())
+  updated_by                String?
+  deleted_at                DateTime?
+  deleted_by                String?
+  relasi_cb_bangunan_fungsi relasi_cb_bangunan_fungsi[]
+}
+
+model master_cb_bangunan_gaya_arsitektur {
+  id          String        @id
+  nama        String
+  aktif       Boolean       @default(true)
+  created_at  DateTime      @default(now())
+  created_by  String
+  updated_at  DateTime      @default(now())
+  updated_by  String?
+  deleted_at  DateTime?
+  deleted_by  String?
+  cb_bangunan cb_bangunan[]
+}
+
+model master_cb_bangunan_ornamen {
+  id                         String                       @id
+  nama                       String
+  aktif                      Boolean                      @default(true)
+  created_at                 DateTime                     @default(now())
+  created_by                 String
+  updated_at                 DateTime                     @default(now())
+  updated_by                 String?
+  deleted_at                 DateTime?
+  deleted_by                 String?
+  relasi_cb_bangunan_ornamen relasi_cb_bangunan_ornamen[]
+}
+
+model master_cb_bangunan_tanda {
+  id                       String                     @id
+  nama                     String
+  aktif                    Boolean                    @default(true)
+  created_at               DateTime                   @default(now())
+  created_by               String
+  updated_at               DateTime                   @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  relasi_cb_bangunan_tanda relasi_cb_bangunan_tanda[]
+}
+
+model master_cb_benda_bahan {
+  id                    String                  @id
+  nama_bahan            String
+  aktif                 Boolean                 @default(true)
+  created_at            DateTime                @default(now())
+  created_by            String
+  updated_at            DateTime                @default(now())
+  updated_by            String?
+  deleted_at            DateTime?
+  deleted_by            String?
+  relasi_cb_benda_bahan relasi_cb_benda_bahan[]
+}
+
+model master_cb_benda_hiasan {
+  id                     String                   @id
+  nama_hiasan            String
+  aktif                  Boolean                  @default(true)
+  created_at             DateTime                 @default(now())
+  created_by             String
+  updated_at             DateTime                 @default(now())
+  updated_by             String?
+  deleted_at             DateTime?
+  deleted_by             String?
+  relasi_cb_benda_hiasan relasi_cb_benda_hiasan[]
+}
+
+model master_cb_benda_kelompok {
+  id                       String                     @id
+  nama_kelompok            String
+  aktif                    Boolean                    @default(true)
+  created_at               DateTime                   @default(now())
+  created_by               String
+  updated_at               DateTime                   @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  cb_benda                 cb_benda[]
+  relasi_cb_benda_kelompok relasi_cb_benda_kelompok[]
+}
+
+model master_cb_benda_tanda {
+  id                    String                  @id
+  nama_tanda            String
+  aktif                 Boolean                 @default(true)
+  created_at            DateTime                @default(now())
+  created_by            String
+  updated_at            DateTime                @default(now())
+  updated_by            String?
+  deleted_at            DateTime?
+  deleted_by            String?
+  relasi_cb_benda_tanda relasi_cb_benda_tanda[]
+}
+
+model master_cb_kawasan_fungsi {
+  id                       String                     @id
+  nama                     String
+  aktif                    Boolean                    @default(true)
+  created_at               DateTime                   @default(now())
+  created_by               String
+  updated_at               DateTime                   @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  relasi_cb_kawasan_fungsi relasi_cb_kawasan_fungsi[]
+}
+
+model master_cb_keutuhan {
+  id            String        @id
+  nama_keutuhan String
+  aktif         Boolean       @default(true)
+  urutan        Int
+  created_at    DateTime      @default(now())
+  created_by    String
+  updated_at    DateTime      @default(now())
+  updated_by    String?
+  deleted_at    DateTime?
+  deleted_by    String?
+  cb_bangunan   cb_bangunan[]
+  cb_benda      cb_benda[]
+  cb_kawasan    cb_kawasan[]
+  cb_situs      cb_situs[]
+  cb_struktur   cb_struktur[]
+}
+
+model master_cb_pengelolaan {
+  id               String        @id
+  nama_pengelolaan String
+  aktif            Boolean       @default(true)
+  urutan           Int
+  created_at       DateTime      @default(now())
+  created_by       String
+  updated_at       DateTime      @default(now())
+  updated_by       String?
+  deleted_at       DateTime?
+  deleted_by       String?
+  cb_bangunan      cb_bangunan[]
+  cb_benda         cb_benda[]
+  cb_kawasan       cb_kawasan[]
+  cb_situs         cb_situs[]
+  cb_struktur      cb_struktur[]
+}
+
+model master_cb_periode {
+  id           String        @id
+  nama_periode String
+  aktif        Boolean       @default(true)
+  urutan       Int
+  created_at   DateTime      @default(now())
+  created_by   String
+  updated_at   DateTime      @default(now())
+  updated_by   String?
+  deleted_at   DateTime?
+  deleted_by   String?
+  cb_bangunan  cb_bangunan[]
+  cb_benda     cb_benda[]
+  cb_kawasan   cb_kawasan[]
+  cb_situs     cb_situs[]
+  cb_struktur  cb_struktur[]
+}
+
+model master_cb_perolehan {
+  id             String        @id
+  nama_perolehan String
+  aktif          Boolean       @default(true)
+  created_at     DateTime      @default(now())
+  created_by     String
+  updated_at     DateTime      @default(now())
+  updated_by     String?
+  deleted_at     DateTime?
+  deleted_by     String?
+  cb_bangunan    cb_bangunan[]
+  cb_benda       cb_benda[]
+  cb_kawasan     cb_kawasan[]
+  cb_situs       cb_situs[]
+  cb_struktur    cb_struktur[]
+}
+
+model master_cb_satuan_dimensi {
+  id                                                                                String        @id
+  nama_satuan_dimensi                                                               String
+  aktif                                                                             Boolean       @default(true)
+  urutan                                                                            Int
+  created_at                                                                        DateTime      @default(now())
+  created_by                                                                        String
+  updated_at                                                                        DateTime      @default(now())
+  updated_by                                                                        String?
+  deleted_at                                                                        DateTime?
+  deleted_by                                                                        String?
+  cb_bangunan_cb_bangunan_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi         cb_bangunan[] @relation("cb_bangunan_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi")
+  cb_bangunan_cb_bangunan_dimensi_luas_bangunan_satuan_idTomaster_cb_satuan_dimensi cb_bangunan[] @relation("cb_bangunan_dimensi_luas_bangunan_satuan_idTomaster_cb_satuan_dimensi")
+  cb_bangunan_cb_bangunan_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi    cb_bangunan[] @relation("cb_bangunan_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi")
+  cb_bangunan_cb_bangunan_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi       cb_bangunan[] @relation("cb_bangunan_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi")
+  cb_bangunan_cb_bangunan_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi        cb_bangunan[] @relation("cb_bangunan_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi")
+  cb_benda_cb_benda_diameter_atas_satuan_idTomaster_cb_satuan_dimensi               cb_benda[]    @relation("cb_benda_diameter_atas_satuan_idTomaster_cb_satuan_dimensi")
+  cb_benda_cb_benda_diameter_badan_satuan_idTomaster_cb_satuan_dimensi              cb_benda[]    @relation("cb_benda_diameter_badan_satuan_idTomaster_cb_satuan_dimensi")
+  cb_benda_cb_benda_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi               cb_benda[]    @relation("cb_benda_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi")
+  cb_benda_cb_benda_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi               cb_benda[]    @relation("cb_benda_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi")
+  cb_benda_cb_benda_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi             cb_benda[]    @relation("cb_benda_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi")
+  cb_benda_cb_benda_dimensi_tebal_satuan_idTomaster_cb_satuan_dimensi               cb_benda[]    @relation("cb_benda_dimensi_tebal_satuan_idTomaster_cb_satuan_dimensi")
+  cb_benda_cb_benda_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi              cb_benda[]    @relation("cb_benda_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi")
+  cb_kawasan                                                                        cb_kawasan[]
+  cb_situs_cb_situs_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi               cb_situs[]    @relation("cb_situs_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi")
+  cb_situs_cb_situs_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi          cb_situs[]    @relation("cb_situs_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi")
+  cb_situs_cb_situs_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi             cb_situs[]    @relation("cb_situs_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_diameter_atas_satuan_idTomaster_cb_satuan_dimensi         cb_struktur[] @relation("cb_struktur_diameter_atas_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_diameter_badan_satuan_idTomaster_cb_satuan_dimensi        cb_struktur[] @relation("cb_struktur_diameter_badan_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi         cb_struktur[] @relation("cb_struktur_diameter_kaki_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi         cb_struktur[] @relation("cb_struktur_dimensi_lebar_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_dimensi_luas_struktur_satuan_idTomaster_cb_satuan_dimensi cb_struktur[] @relation("cb_struktur_dimensi_luas_struktur_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi    cb_struktur[] @relation("cb_struktur_dimensi_luas_tanah_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi       cb_struktur[] @relation("cb_struktur_dimensi_panjang_satuan_idTomaster_cb_satuan_dimensi")
+  cb_struktur_cb_struktur_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi        cb_struktur[] @relation("cb_struktur_dimensi_tinggi_satuan_idTomaster_cb_satuan_dimensi")
+}
+
+model master_cb_sifat {
+  id          String        @id
+  nama_sifat  String
+  aktif       Boolean       @default(true)
+  created_at  DateTime      @default(now())
+  created_by  String
+  updated_at  DateTime      @default(now())
+  updated_by  String?
+  deleted_at  DateTime?
+  deleted_by  String?
+  cb_bangunan cb_bangunan[]
+  cb_benda    cb_benda[]
+  cb_kawasan  cb_kawasan[]
+  cb_situs    cb_situs[]
+  cb_struktur cb_struktur[]
+}
+
+model master_cb_situs_kelompok {
+  id                       String                     @id
+  kelompok                 String
+  nama                     String
+  aktif                    Boolean                    @default(true)
+  created_at               DateTime                   @default(now())
+  created_by               String
+  updated_at               DateTime                   @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  relasi_cb_situs_kelompok relasi_cb_situs_kelompok[]
+}
+
+model master_cb_status_kepemilikan {
+  id                      String        @id
+  nama_status_kepemilikan String
+  aktif                   Boolean       @default(true)
+  urutan                  Int
+  created_at              DateTime      @default(now())
+  created_by              String
+  updated_at              DateTime      @default(now())
+  updated_by              String?
+  deleted_at              DateTime?
+  deleted_by              String?
+  cb_bangunan             cb_bangunan[]
+  cb_benda                cb_benda[]
+  cb_kawasan              cb_kawasan[]
+  cb_situs                cb_situs[]
+  cb_struktur             cb_struktur[]
+}
+
+model master_cb_struktur_bahan {
+  id                       String                     @id
+  nama                     String
+  aktif                    Boolean                    @default(true)
+  created_at               DateTime                   @default(now())
+  created_by               String
+  updated_at               DateTime                   @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  relasi_cb_struktur_bahan relasi_cb_struktur_bahan[]
+}
+
+model master_cb_struktur_fungsi {
+  id                        String                      @id
+  nama                      String
+  aktif                     Boolean                     @default(true)
+  created_at                DateTime                    @default(now())
+  created_by                String
+  updated_at                DateTime                    @default(now())
+  updated_by                String?
+  deleted_at                DateTime?
+  deleted_by                String?
+  relasi_cb_struktur_fungsi relasi_cb_struktur_fungsi[]
+}
+
+model master_cb_struktur_ornamen {
+  id                         String                       @id
+  nama                       String
+  aktif                      Boolean                      @default(true)
+  created_at                 DateTime                     @default(now())
+  created_by                 String
+  updated_at                 DateTime                     @default(now())
+  updated_by                 String?
+  deleted_at                 DateTime?
+  deleted_by                 String?
+  relasi_cb_struktur_ornamen relasi_cb_struktur_ornamen[]
+}
+
+model master_cb_struktur_tanda {
+  id                       String                     @id
+  nama                     String
+  aktif                    Boolean                    @default(true)
+  created_at               DateTime                   @default(now())
+  created_by               String
+  updated_at               DateTime                   @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  relasi_cb_struktur_tanda relasi_cb_struktur_tanda[]
+}
+
+model master_lk_jenis {
+  id         String    @id
+  nama       String
+  aktif      Boolean   @default(true)
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+  lk         lk[]
+}
+
+model master_lk_riwayat_aktivitas_jenis {
+  id                          String                        @id
+  nama                        String
+  aktif                       Boolean                       @default(true)
+  created_at                  DateTime                      @default(now())
+  created_by                  String
+  updated_at                  DateTime                      @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  relasi_lk_riwayat_aktivitas relasi_lk_riwayat_aktivitas[]
+}
+
+model master_lk_riwayat_tingkat {
+  id                            String                          @id
+  nama                          String
+  aktif                         Boolean                         @default(true)
+  created_at                    DateTime                        @default(now())
+  created_by                    String
+  updated_at                    DateTime                        @default(now())
+  updated_by                    String?
+  deleted_at                    DateTime?
+  deleted_by                    String?
+  relasi_lk_riwayat_aktivitas   relasi_lk_riwayat_aktivitas[]
+  relasi_lk_riwayat_penghargaan relasi_lk_riwayat_penghargaan[]
+}
+
+model master_lk_status_kepemilikan {
+  id         String    @id
+  nama       String
+  aktif      Boolean   @default(true)
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+  lk         lk[]
+}
+
+model master_media_dokumen_kajian {
+  id         String    @id
+  data_id    String
+  path       String?
+  data_type  String?
+  nama       String?
+  mime_type  String?
+  ukuran     Float?
+  created_at DateTime?
+  updated_at DateTime?
+}
+
+model master_media_dokumen_lainnya {
+  id         String    @id
+  data_id    String
+  path       String?
+  data_type  String?
+  nama       String?
+  mime_type  String?
+  ukuran     Float?
+  created_at DateTime?
+  updated_at DateTime?
+}
+
+model master_media_gambar {
+  id         String    @id
+  data_id    String
+  path       String?
+  data_type  String?
+  nama       String?
+  mime_type  String?
+  ukuran     Float?
+  created_at DateTime?
+  updated_at DateTime?
+}
+
+model master_media_penyebaran_seni_sastra {
+  id               String   @id
+  media_penyebaran String
+  aktif            Boolean  @default(false)
+  created_at       DateTime
+
+  @@index([media_penyebaran])
+}
+
+model master_media_tautan_audio {
+  id         String    @id
+  data_id    String
+  path       String?
+  data_type  String?
+  nama       String?
+  mime_type  String?
+  ukuran     Float?
+  created_at DateTime?
+  updated_at DateTime?
+}
+
+model master_media_tautan_video {
+  id         String    @id
+  data_id    String
+  path       String?
+  data_type  String?
+  nama       String?
+  url        String?
+  created_at DateTime?
+  updated_at DateTime?
+}
+
+model master_opk {
+  id                              String                            @id
+  kategori_opk_dapobud            String?
+  domain_wbtb_unesco              String?
+  kategori_wbtb_unesco            String?
+  opk                             String?
+  status                          Boolean                           @default(true)
+  template                        String?
+  class                           String
+  opk_adat_istiadat               opk_adat_istiadat[]
+  opk_alat_produksi               opk_alat_produksi[]
+  opk_arsitektur_tradisional      opk_arsitektur_tradisional[]
+  opk_bahasa                      opk_bahasa[]
+  opk_cerita_rakyat               opk_cerita_rakyat[]
+  opk_film                        opk_film[]
+  opk_instrumen_musik             opk_instrumen_musik[]
+  opk_kerajinan                   opk_kerajinan[]
+  opk_lagu                        opk_lagu[]
+  opk_makanan_minuman             opk_makanan_minuman[]
+  opk_manuskrip                   opk_manuskrip[]
+  opk_media_baru                  opk_media_baru[]
+  opk_metode_penyehatan           opk_metode_penyehatan[]
+  opk_naskah_skenario             opk_naskah_skenario[]
+  opk_olahraga_tradisional        opk_olahraga_tradisional[]
+  opk_pakaian_tradisional         opk_pakaian_tradisional[]
+  opk_pantun_peribahasa_teka_teki opk_pantun_peribahasa_teka_teki[]
+  opk_pengetahuan_tradisional     opk_pengetahuan_tradisional[]
+  opk_permainan_rakyat            opk_permainan_rakyat[]
+  opk_ramuan_tradisional          opk_ramuan_tradisional[]
+  opk_rempah_bumbu                opk_rempah_bumbu[]
+  opk_ritus                       opk_ritus[]
+  opk_seni_musik                  opk_seni_musik[]
+  opk_seni_pertunjukan            opk_seni_pertunjukan[]
+  opk_seni_rupa                   opk_seni_rupa[]
+  opk_seni_sastra                 opk_seni_sastra[]
+  opk_seni_tari                   opk_seni_tari[]
+  opk_senjata_tradisional         opk_senjata_tradisional[]
+  opk_sistem_pengolahan_lahan     opk_sistem_pengolahan_lahan[]
+  opk_teknologi_penunjang         opk_teknologi_penunjang[]
+}
+
+model master_opk_bahan {
+  id         String   @id
+  nama_bahan String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([nama_bahan])
+}
+
+model master_opk_etnis {
+  id         String   @id
+  nama_etnis String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+  urutan     String?
+  kode       String?
+  klaster    String?
+
+  @@index([nama_etnis])
+}
+
+model master_opk_jenis_adat_istiadat {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_film {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_makanan_minuman {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_pantun_pribahasa_teka_teki {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_pengetahuan_tradisional {
+  id         String   @id()
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_ramuan_tradisional {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_ritus {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_seni_musik {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_seni_pertunjukan {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_jenis_seni_tari {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_kategori_cerita_rakyat {
+  id         String   @id
+  kategori   String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([kategori])
+}
+
+model master_opk_manuskrip_periode {
+  id         String   @id
+  periode    String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([periode])
+}
+
+model master_opk_pelaksanaan_ritus {
+  id         String   @id
+  nama       String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([nama])
+}
+
+model master_opk_satuan_manuskrip {
+  id          String   @id
+  nama_satuan String
+  aktif       Boolean  @default(false)
+  created_at  DateTime
+
+  @@index([nama_satuan])
+}
+
+model master_opk_satuan_pengetahuan_tradisional {
+  id                     String   @id()
+  satuan_usia_penggunaan String
+  aktif                  Boolean  @default(false)
+  created_at             DateTime
+
+  @@index([satuan_usia_penggunaan])
+}
+
+model master_opk_seni_rupa {
+  id         String   @id
+  jenis      String
+  aktif      Boolean  @default(false)
+  created_at DateTime
+
+  @@index([jenis])
+}
+
+model master_opk_seni_sastra {
+  id                  String   @id
+  opk_seni_sastra_id  String
+  media_penyebaran_id String
+  created_at          DateTime
+}
+
+model master_sarpras_status_kepemilikan {
+  id         String    @id
+  nama       String
+  aktif      Boolean   @default(true)
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+  sarpras    sarpras[]
+}
+
+model master_tb_jenis_pelatihan {
+  id                  String                @id
+  nama                String
+  aktif               Boolean               @default(true)
+  created_at          DateTime              @default(now())
+  created_by          String
+  updated_at          DateTime              @default(now())
+  updated_by          String?
+  deleted_at          DateTime?
+  deleted_by          String?
+  relasi_tb_pelatihan relasi_tb_pelatihan[]
+}
+
+model master_tb_jenjang_pendidikan {
+  id                   String                 @id
+  nama                 String
+  aktif                Boolean                @default(true)
+  created_at           DateTime               @default(now())
+  created_by           String
+  updated_at           DateTime               @default(now())
+  updated_by           String?
+  deleted_at           DateTime?
+  deleted_by           String?
+  relasi_tb_pendidikan relasi_tb_pendidikan[]
+}
+
+model master_tb_peran_pelatihan {
+  id                  String                @id
+  nama                String
+  aktif               Boolean               @default(true)
+  created_at          DateTime              @default(now())
+  created_by          String
+  updated_at          DateTime              @default(now())
+  updated_by          String?
+  deleted_at          DateTime?
+  deleted_by          String?
+  relasi_tb_pelatihan relasi_tb_pelatihan[]
+}
+
+model master_tb_tingkat_pelatihan {
+  id                         String                       @id
+  nama                       String
+  aktif                      Boolean                      @default(true)
+  created_at                 DateTime                     @default(now())
+  created_by                 String
+  updated_at                 DateTime                     @default(now())
+  updated_by                 String?
+  deleted_at                 DateTime?
+  deleted_by                 String?
+  relasi_tb_aktivitas_budaya relasi_tb_aktivitas_budaya[]
+  relasi_tb_pelatihan        relasi_tb_pelatihan[]
+  relasi_tb_penghargaan      relasi_tb_penghargaan[]
+}
+
+model master_wbtb_domain {
+  id          String        @id
+  nama        String
+  aktif       Boolean       @default(true)
+  created_at  DateTime      @default(now())
+  created_by  String
+  updated_at  DateTime      @default(now())
+  updated_by  String?
+  deleted_at  DateTime?
+  deleted_by  String?
+  wbtb_domain wbtb_domain[]
+}
+
+model master_wbtb_kondisi {
+  id           String         @id
+  nama         String
+  aktif        Boolean        @default(true)
+  created_at   DateTime       @default(now())
+  created_by   String
+  updated_at   DateTime       @default(now())
+  updated_by   String?
+  deleted_at   DateTime?
+  deleted_by   String?
+  wbtb_kondisi wbtb_kondisi[]
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement())
+  migration String
+  batch     Int
+}
+
+model model_has_permissions {
+  permission_id BigInt
+  model_type    String
+  model_id      BigInt
+  permissions   permissions @relation(fields: [permission_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([permission_id, model_id, model_type])
+  @@index([model_id, model_type])
+}
+
+model model_has_roles {
+  role_id    BigInt
+  model_type String
+  model_id   String
+  roles      roles  @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([role_id, model_id, model_type])
+  @@index([model_id, model_type])
+}
+
+model opk {
+  id                              String                            @id
+  dapobud_id                      String
+  master_opk_id                   String
+  deleted_at                      DateTime?
+  created_at                      DateTime?
+  updated_at                      DateTime?
+  childs_id                       String?
+  childs_type                     String?
+  opk_adat_istiadat               opk_adat_istiadat[]
+  opk_alat_produksi               opk_alat_produksi[]
+  opk_arsitektur_tradisional      opk_arsitektur_tradisional[]
+  opk_bahasa                      opk_bahasa[]
+  opk_cerita_rakyat               opk_cerita_rakyat[]
+  opk_film                        opk_film[]
+  opk_instrumen_musik             opk_instrumen_musik[]
+  opk_kerajinan                   opk_kerajinan[]
+  opk_lagu                        opk_lagu[]
+  opk_makanan_minuman             opk_makanan_minuman[]
+  opk_manuskrip                   opk_manuskrip[]
+  opk_media_baru                  opk_media_baru[]
+  opk_metode_penyehatan           opk_metode_penyehatan[]
+  opk_naskah_skenario             opk_naskah_skenario[]
+  opk_olahraga_tradisional        opk_olahraga_tradisional[]
+  opk_pakaian_tradisional         opk_pakaian_tradisional[]
+  opk_pantun_peribahasa_teka_teki opk_pantun_peribahasa_teka_teki[]
+  opk_pengetahuan_tradisional     opk_pengetahuan_tradisional[]
+  opk_permainan_rakyat            opk_permainan_rakyat[]
+  opk_ramuan_tradisional          opk_ramuan_tradisional[]
+  opk_rempah_bumbu                opk_rempah_bumbu[]
+  opk_ritus                       opk_ritus[]
+  opk_seni_musik                  opk_seni_musik[]
+  opk_seni_pertunjukan            opk_seni_pertunjukan[]
+  opk_seni_rupa                   opk_seni_rupa[]
+  opk_seni_sastra                 opk_seni_sastra[]
+  opk_seni_tari                   opk_seni_tari[]
+  opk_senjata_tradisional         opk_senjata_tradisional[]
+  opk_sistem_pengolahan_lahan     opk_sistem_pengolahan_lahan[]
+  opk_teknologi_penunjang         opk_teknologi_penunjang[]
+}
+
+model opk_adat_istiadat {
+  id                          String     @id
+  dapobud_id                  String
+  jenis_id                    String
+  etnis_id                    String
+  masih_dilaksanakan          Boolean    @default(false)
+  tahun_terakhir_dilaksanakan Int?
+  alasan_tidak_dilaksanakan   String?
+  deskripsi                   String?
+  deleted_at                  DateTime?
+  created_at                  DateTime?
+  updated_at                  DateTime?
+  opk_id                      String
+  master_opk_id               String
+  master_opk                  master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                         opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_alat_produksi {
+  id                     String     @id
+  dapobud_id             String
+  etnis_id               String
+  alamat_provinsi_id     String?
+  alamat_kabupaten_id    String?
+  alamat_kecamatan_id    String?
+  alamat_desa_id         String?
+  alamat                 String?
+  bahan_baku             String?
+  fungsi                 String?
+  hasil_produksi         String?
+  deskripsi              String?
+  deleted_at             DateTime?
+  created_at             DateTime?
+  updated_at             DateTime?
+  waktu_mulai_penggunaan String?
+  opk_id                 String
+  master_opk_id          String
+  master_opk             master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                    opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_arsitektur_tradisional {
+  id                    String     @id
+  dapobud_id            String
+  etnis_id              String
+  alamat_provinsi_id    String?
+  alamat_kabupaten_id   String?
+  alamat_kecamatan_id   String?
+  alamat_desa_id        String?
+  alamat                String?
+  fungsi_utama          String?
+  bahan_baku            String?
+  nama_unsur_dan_simbol String?
+  deskripsi             String?
+  deleted_at            DateTime?
+  created_at            DateTime?
+  updated_at            DateTime?
+  makna_yang_terkandung String?
+  opk_id                String
+  master_opk_id         String
+  master_opk            master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                   opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_bahasa {
+  id              String     @id
+  dapobud_id      String
+  etnis_id        String
+  jenis_aksara    String?
+  memiliki_dialek Boolean    @default(false)
+  nama_dialek     String?
+  deskripsi       String?
+  deleted_at      DateTime?
+  created_at      DateTime?
+  updated_at      DateTime?
+  opk_id          String
+  master_opk_id   String
+  master_opk      master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk             opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([jenis_aksara])
+}
+
+model opk_cerita_rakyat {
+  id              String     @id
+  dapobud_id      String
+  kategori_id     String
+  etnis_id        String
+  media_penyajian String?
+  komponen_pelaku String?
+  deskripsi       String?
+  deleted_at      DateTime?
+  created_at      DateTime?
+  updated_at      DateTime?
+  opk_id          String
+  master_opk_id   String
+  master_opk      master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk             opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_film {
+  id                 String     @id
+  dapobud_id         String
+  jenis_id           String
+  tahun_penciptaan   Int?
+  deskripsi          String?
+  deleted_at         DateTime?
+  created_at         DateTime?
+  updated_at         DateTime?
+  genre              String?
+  durasi             Int?
+  satuan_durasi_film String?
+  opk_id             String
+  master_opk_id      String
+  produser           String?
+  sutradara          String?
+  penulis            String?
+  pemeran            String?
+  master_opk         master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_instrumen_musik {
+  id                  String     @id
+  dapobud_id          String
+  etnis_id            String
+  alamat_provinsi_id  String?
+  alamat_kabupaten_id String?
+  alamat_kecamatan_id String?
+  alamat_desa_id      String?
+  alamat              String?
+  bahan_baku          String?
+  cara_penggunaan     String?
+  cara_pembuatan      String?
+  deskripsi           String?
+  deleted_at          DateTime?
+  created_at          DateTime?
+  updated_at          DateTime?
+  opk_id              String
+  master_opk_id       String
+  master_opk          master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                 opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_kerajinan {
+  id                  String     @id
+  dapobud_id          String
+  etnis_id            String
+  alamat_provinsi_id  String?
+  alamat_kabupaten_id String?
+  alamat_kecamatan_id String?
+  alamat_desa_id      String?
+  alamat              String?
+  teknik_pembuatan    String?
+  bahan_baku          String?
+  kegunaan            String?
+  deskripsi           String?
+  deleted_at          DateTime?
+  created_at          DateTime?
+  updated_at          DateTime?
+  opk_id              String
+  master_opk_id       String
+  master_opk          master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                 opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_lagu {
+  id               String     @id
+  dapobud_id       String
+  pencipta         String?
+  tahun_penciptaan Int?
+  label            String?
+  genre            String?
+  deskripsi        String?
+  deleted_at       DateTime?
+  created_at       DateTime?
+  updated_at       DateTime?
+  opk_id           String
+  master_opk_id    String
+  master_opk       master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk              opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_makanan_minuman {
+  id                         String     @id
+  dapobud_id                 String
+  jenis_id                   String
+  etnis_id                   String
+  alamat_provinsi_id         String?
+  alamat_kabupaten_id        String?
+  alamat_kecamatan_id        String?
+  alamat_desa_id             String?
+  alamat                     String?
+  bahan_baku_pembuatan       String?
+  cara_pembuatan             String?
+  cara_dan_waktu_penyajian   String?
+  cara_dan_waktu_penyimpanan String?
+  deskripsi                  String?
+  deleted_at                 DateTime?
+  created_at                 DateTime?
+  updated_at                 DateTime?
+  opk_id                     String
+  master_opk_id              String
+  master_opk                 master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                        opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_manuskrip {
+  id                      String     @id
+  dapobud_id              String
+  satuan_id               String
+  bahan_id                String
+  alamat_provinsi_id      String?
+  alamat_kabupaten_id     String?
+  alamat_kecamatan_id     String?
+  alamat_desa_id          String?
+  judul                   String?
+  karya                   String?
+  subjek                  String?
+  jumlah                  Int?
+  nama_tempat_penyimpanan String?
+  alamat                  String?
+  ukuran_panjang          Float?
+  ukuran_panjang_satuan   String?
+  ukuran_lebar            Float?
+  ukuran_lebar_satuan     String?
+  ukuran_tinggi           Float?
+  ukuran_tinggi_satuan    String?
+  ukuran_tebal            Float?
+  ukuran_tebal_satuan     String?
+  deleted_at              DateTime?
+  created_at              DateTime?
+  updated_at              DateTime?
+  periode_id              String
+  deskripsi               String?
+  opk_id                  String
+  master_opk_id           String
+  opk_bahasa_id           String?
+  wbtb_tenaga_budaya_id   String?
+  master_opk              master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                     opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([judul])
+}
+
+model opk_media_baru {
+  id                       String     @id
+  dapobud_id               String
+  teknik_pembuatan         String?
+  tahun_penciptaan         Int?
+  jumlah_publikasi_pameran Int?
+  deskripsi                String?
+  deleted_at               DateTime?
+  created_at               DateTime?
+  updated_at               DateTime?
+  opk_id                   String
+  master_opk_id            String
+  master_opk               master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                      opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_metode_penyehatan {
+  id                       String     @id
+  dapobud_id               String
+  etnis_id                 String
+  alamat_provinsi_id       String?
+  alamat_kabupaten_id      String?
+  alamat_kecamatan_id      String?
+  alamat_desa_id           String?
+  alamat                   String?
+  cara_penyehatan          String?
+  peralatan_yang_digunakan String?
+  deskripsi                String?
+  deleted_at               DateTime?
+  created_at               DateTime?
+  updated_at               DateTime?
+  opk_id                   String
+  master_opk_id            String
+  master_opk               master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                      opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_naskah_skenario {
+  id               String     @id
+  dapobud_id       String
+  penulis          String?
+  tahun_penciptaan Int?
+  deskripsi        String?
+  deleted_at       DateTime?
+  created_at       DateTime?
+  updated_at       DateTime?
+  opk_id           String
+  master_opk_id    String
+  master_opk       master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk              opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_olahraga_tradisional {
+  id                     String     @id
+  dapobud_id             String
+  etnis_id               String
+  alamat_provinsi_id     String?
+  alamat_kabupaten_id    String?
+  alamat_kecamatan_id    String?
+  alamat_desa_id         String?
+  alamat                 String?
+  pilihan_jumlah_pemain  String?
+  jumlah_pemain_pasti    Boolean    @default(false)
+  jumlah_pemain_min      Int?
+  jumlah_pemain_max      Int?
+  jumlah_pemain_rentang  String?
+  perlengkapan           String?
+  nilai_moral_terkandung String?
+  aturan_permainan       String?
+  deskripsi              String?
+  deleted_at             DateTime?
+  created_at             DateTime?
+  updated_at             DateTime?
+  opk_id                 String
+  master_opk_id          String
+  master_opk             master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                    opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_pakaian_tradisional {
+  id                     String     @id
+  dapobud_id             String
+  etnis_id               String
+  alamat_provinsi_id     String?
+  alamat_kabupaten_id    String?
+  alamat_kecamatan_id    String?
+  alamat_desa_id         String?
+  alamat                 String?
+  teknik_pembuatan       String?
+  bahan_baku             String?
+  orang_yang_menggunakan String?
+  waktu_penggunaan       String?
+  tempat_penggunaan      String?
+  deskripsi              String?
+  deleted_at             DateTime?
+  created_at             DateTime?
+  updated_at             DateTime?
+  opk_id                 String
+  master_opk_id          String
+  master_opk             master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                    opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_pantun_peribahasa_teka_teki {
+  id            String     @id
+  dapobud_id    String
+  jenis_id      String
+  etnis_id      String
+  deskripsi     String?
+  deleted_at    DateTime?
+  created_at    DateTime?
+  updated_at    DateTime?
+  opk_id        String
+  master_opk_id String
+  master_opk    master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk           opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_pengetahuan_tradisional {
+  id                        String     @id
+  dapobud_id                String
+  etnis_id                  String
+  satuan_usia_penggunaan_id String
+  alamat_provinsi_id        String?
+  alamat_kabupaten_id       String?
+  alamat_kecamatan_id       String?
+  alamat_desa_id            String?
+  alamat                    String?
+  perkiraan_usia_penggunaan Int?
+  kegunaan                  String?
+  deskripsi                 String?
+  deleted_at                DateTime?
+  created_at                DateTime?
+  updated_at                DateTime?
+  jenis_id                  String
+  opk_id                    String
+  master_opk_id             String
+  master_opk                master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                       opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_permainan_rakyat {
+  id                     String     @id
+  dapobud_id             String
+  etnis_id               String
+  alamat_provinsi_id     String?
+  alamat_kabupaten_id    String?
+  alamat_kecamatan_id    String?
+  alamat_desa_id         String?
+  alamat                 String?
+  jumlah_pemain_pasti    Boolean    @default(false)
+  jumlah_pemain_min      Int?
+  jumlah_pemain_max      Int?
+  jumlah_pemain_rentang  String?
+  perlengkapan           String?
+  nilai_moral_terkandung String?
+  aturan_permainan       String?
+  deskripsi              String?
+  deleted_at             DateTime?
+  created_at             DateTime?
+  updated_at             DateTime?
+  opk_id                 String
+  master_opk_id          String
+  master_opk             master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                    opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_ramuan_tradisional {
+  id                   String     @id
+  dapobud_id           String
+  jenis_id             String
+  etnis_id             String
+  alamat_provinsi_id   String?
+  alamat_kabupaten_id  String?
+  alamat_kecamatan_id  String?
+  alamat_desa_id       String?
+  alamat               String?
+  khasiat              String?
+  bahan_baku_pembuatan String?
+  cara_pembuatan       String?
+  deskripsi            String?
+  deleted_at           DateTime?
+  created_at           DateTime?
+  updated_at           DateTime?
+  opk_id               String
+  master_opk_id        String
+  master_opk           master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                  opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_rempah_bumbu {
+  id                  String     @id
+  dapobud_id          String
+  etnis_id            String
+  alamat_provinsi_id  String?
+  alamat_kabupaten_id String?
+  alamat_kecamatan_id String?
+  alamat_desa_id      String?
+  alamat              String?
+  masih_digunakan     Boolean    @default(false)
+  cara_penggunaan     String?
+  manfaat_penggunaan  String?
+  deskripsi           String?
+  deleted_at          DateTime?
+  created_at          DateTime?
+  updated_at          DateTime?
+  opk_id              String
+  master_opk_id       String
+  master_opk          master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                 opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_ritus {
+  id                          String     @id
+  dapobud_id                  String
+  jenis_id                    String
+  etnis_id                    String
+  masih_dilaksanakan_id       String
+  alamat_provinsi_id          String?
+  alamat_kabupaten_id         String?
+  alamat_kecamatan_id         String?
+  alamat_desa_id              String?
+  komponen_pelaku             String?
+  alamat                      String?
+  mantra_yang_digunakan       String?
+  perlengkapan_yang_digunakan String?
+  tahun_terakhir_dilaksanakan Int?
+  alasan_tidak_dilaksanakan   String?
+  deskripsi                   String?
+  deleted_at                  DateTime?
+  created_at                  DateTime?
+  updated_at                  DateTime?
+  tujuan_penggunaan_mantra    String?
+  opk_id                      String
+  master_opk_id               String
+  master_opk                  master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                         opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_seni_musik {
+  id                    String     @id
+  dapobud_id            String
+  etnis_id              String
+  jenis_id              String
+  dapobud_opk_bahasa_id String?
+  komponen              String?
+  deskripsi             String?
+  deleted_at            DateTime?
+  created_at            DateTime?
+  updated_at            DateTime?
+  opk_id                String
+  master_opk_id         String
+  master_opk            master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                   opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_seni_pertunjukan {
+  id                     String     @id
+  dapobud_id             String
+  etnis_id               String
+  jenis_id               String
+  penokohan              String?
+  nilai_yang_disampaikan String?
+  deskripsi              String?
+  deleted_at             DateTime?
+  created_at             DateTime?
+  updated_at             DateTime?
+  opk_id                 String
+  master_opk_id          String
+  master_opk             master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                    opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_seni_rupa {
+  id                       String     @id
+  dapobud_id               String
+  jenis_id                 String
+  media                    String?
+  teknik_pembuatan         String?
+  tahun_penciptaan         Int?
+  jumlah_publikasi_pameran Int?
+  deskripsi                String?
+  deleted_at               DateTime?
+  created_at               DateTime?
+  updated_at               DateTime?
+  opk_id                   String
+  master_opk_id            String
+  master_opk               master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                      opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_seni_sastra {
+  id                              String     @id
+  dapobud_id                      String
+  tahun_penciptaan                Int?
+  jumlah_publikasi_tahun_terakhir Int?
+  deskripsi                       String?
+  deleted_at                      DateTime?
+  created_at                      DateTime?
+  updated_at                      DateTime?
+  opk_id                          String
+  master_opk_id                   String
+  master_opk                      master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                             opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_seni_tari {
+  id                      String     @id
+  dapobud_id              String
+  etnis_id                String
+  jenis_id                String
+  properti_yang_digunakan String?
+  fungsi                  String?
+  deskripsi               String?
+  deleted_at              DateTime?
+  created_at              DateTime?
+  updated_at              DateTime?
+  opk_id                  String
+  master_opk_id           String
+  master_opk              master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                     opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_senjata_tradisional {
+  id                           String     @id
+  dapobud_id                   String
+  etnis_id                     String
+  alamat                       String?
+  bahan_baku_pembuatan_senjata String?
+  fungsi_senjata               String?
+  deskripsi                    String?
+  deleted_at                   DateTime?
+  created_at                   DateTime?
+  updated_at                   DateTime?
+  alamat_provinsi_id           String?
+  alamat_kabupaten_id          String?
+  alamat_kecamatan_id          String?
+  alamat_desa_id               String?
+  opk_id                       String
+  master_opk_id                String
+  master_opk                   master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                          opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_sistem_pengolahan_lahan {
+  id                           String     @id
+  dapobud_id                   String
+  etnis_id                     String
+  alamat_provinsi_id           String?
+  alamat_kabupaten_id          String?
+  alamat_kecamatan_id          String?
+  alamat_desa_id               String?
+  alamat                       String?
+  fungsi_utama                 String?
+  waktu_mulai_digunakan        Int?
+  satuan_waktu_mulai_digunakan String?
+  bahan_baku                   String?
+  deskripsi                    String?
+  deleted_at                   DateTime?
+  created_at                   DateTime?
+  updated_at                   DateTime?
+  opk_id                       String
+  master_opk_id                String
+  master_opk                   master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                          opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model opk_teknologi_penunjang {
+  id                           String     @id
+  dapobud_id                   String
+  etnis_id                     String
+  alamat_provinsi_id           String?
+  alamat_kabupaten_id          String?
+  alamat_kecamatan_id          String?
+  alamat_desa_id               String?
+  alamat                       String?
+  waktu_mulai_digunakan        Int?
+  satuan_waktu_mulai_digunakan String?
+  bahan_baku                   String?
+  fungsi                       String?
+  deskripsi                    String?
+  deleted_at                   DateTime?
+  created_at                   DateTime?
+  updated_at                   DateTime?
+  opk_id                       String
+  master_opk_id                String
+  master_opk                   master_opk @relation(fields: [master_opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  opk                          opk        @relation(fields: [opk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model password_resets {
+  email      String
+  token      String
+  created_at DateTime?
+
+  @@index([email])
+  @@ignore
+}
+
+model pemanfaatan_relasi {
+  id                                                         String    @id
+  source_dapobud_id                                          String
+  kontek_relasi                                              String
+  jenis_dapobud                                              String
+  jenis_sub_dapobud                                          String?
+  level                                                      String?
+  provinsi_id                                                String?
+  kabupaten_id                                               String?
+  destination_id                                             String?
+  destination_dapobud_id                                     String
+  created_at                                                 DateTime  @default(now())
+  created_by                                                 String
+  updated_at                                                 DateTime  @default(now())
+  updated_by                                                 String?
+  deleted_at                                                 DateTime?
+  deleted_by                                                 String?
+  dapobud_pemanfaatan_relasi_destination_dapobud_idTodapobud dapobud   @relation("pemanfaatan_relasi_destination_dapobud_idTodapobud", fields: [destination_dapobud_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  dapobud_pemanfaatan_relasi_source_dapobud_idTodapobud      dapobud   @relation("pemanfaatan_relasi_source_dapobud_idTodapobud", fields: [source_dapobud_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model pemutakhiran {
+  id                 String    @id
+  dapobud_id         String
+  nama               String
+  status             String    @default("draft")
+  value_before       String
+  value_after        String
+  versi              Int       @default(1)
+  tanggal_ditetapkan DateTime?
+  ditetapkan_oleh_id String?
+  created_at         DateTime  @default(now())
+  created_by         String
+  updated_at         DateTime  @default(now())
+  updated_by         String?
+  deleted_at         DateTime?
+  deleted_by         String?
+  dapobud            dapobud   @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model penetapan_cb {
+  id                           String                       @id
+  tanggal_penetapan            DateTime
+  nomor_sk_penetapan           String
+  dapobud_id                   String
+  tingkat_sk_id                String
+  tingkat_objek_id             String
+  nama_pejabat_penetap         String?
+  status                       String                       @default("draft")
+  created_at                   DateTime                     @default(now())
+  created_by                   String
+  updated_at                   DateTime                     @default(now())
+  updated_by                   String?
+  deleted_at                   DateTime?
+  deleted_by                   String?
+  dapobud                      dapobud                      @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  penetapan_cb_peringkat_objek penetapan_cb_peringkat_objek @relation(fields: [tingkat_objek_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  penetapan_cb_peringkat_sk    penetapan_cb_peringkat_sk    @relation(fields: [tingkat_sk_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  penetapan_cb_lampiran        penetapan_cb_lampiran?
+}
+
+model penetapan_cb_lampiran {
+  id              String       @id
+  penetapan_cb_id String       @unique(map: "penetapan_cb_lampiran_penetapan_cb_id_unique")
+  path            String?
+  nama            String?
+  mime_type       String?
+  size            Float?
+  checksum        Float?
+  created_at      DateTime     @default(now())
+  created_by      String
+  updated_at      DateTime     @default(now())
+  updated_by      String?
+  deleted_at      DateTime?
+  deleted_by      String?
+  penetapan_cb    penetapan_cb @relation(fields: [penetapan_cb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model penetapan_cb_peringkat_objek {
+  id             String         @id
+  nama_peringkat String
+  aktif          Boolean        @default(true)
+  created_at     DateTime       @default(now())
+  created_by     String
+  updated_at     DateTime       @default(now())
+  updated_by     String?
+  deleted_at     DateTime?
+  deleted_by     String?
+  penetapan_cb   penetapan_cb[]
+}
+
+model penetapan_cb_peringkat_sk {
+  id             String         @id
+  nama_peringkat String
+  aktif          Boolean        @default(true)
+  created_at     DateTime       @default(now())
+  created_by     String
+  updated_at     DateTime       @default(now())
+  updated_by     String?
+  deleted_at     DateTime?
+  deleted_by     String?
+  penetapan_cb   penetapan_cb[]
+}
+
+model permissions {
+  id                    BigInt                  @id @default(autoincrement())
+  name                  String
+  guard_name            String
+  created_at            DateTime?
+  updated_at            DateTime?
+  model_has_permissions model_has_permissions[]
+  role_has_permissions  role_has_permissions[]
+
+  @@unique([name, guard_name])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model rekomendasi_penetapan {
+  id                                   String                               @id
+  nomor                                String?
+  tahun                                String
+  bulan                                String
+  tanggal                              DateTime
+  judul                                String
+  peringkat_id                         String?
+  alasan_pasal                         String?
+  catatan_tim_ahli                     String?
+  provinsi_id                          String?
+  kabupaten_id                         String?
+  nomor_naskah_rekomendasi_penetapan   String?
+  judul_naskah_rekomendasi_penetapan   String?
+  dokumen_naskah_rekomendasi_penetapan String?
+  tingkat_tacb                         String?
+  created_at                           DateTime                             @default(now())
+  created_by                           String
+  updated_at                           DateTime                             @default(now())
+  updated_by                           String?
+  deleted_at                           DateTime?
+  deleted_by                           String?
+  status                               String                               @default("draft")
+  rekomendasi_penetapan_peringkat      rekomendasi_penetapan_peringkat?     @relation(fields: [peringkat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_penetapan_dapobud        rekomendasi_penetapan_dapobud[]
+  rekomendasi_penetapan_relasi_pasal   rekomendasi_penetapan_relasi_pasal[]
+  rekomendasi_penetapan_tacb           rekomendasi_penetapan_tacb[]
+}
+
+model rekomendasi_penetapan_dapobud {
+  id                       String                @id
+  rekomendasi_penetapan_id String
+  dapobud_id               String
+  created_at               DateTime              @default(now())
+  created_by               String
+  updated_at               DateTime              @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  dapobud                  dapobud               @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_penetapan    rekomendasi_penetapan @relation(fields: [rekomendasi_penetapan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model rekomendasi_penetapan_pasal {
+  id                                 String                               @id
+  undang_undang                      String
+  pasal                              String
+  aktif                              Boolean                              @default(true)
+  created_at                         DateTime                             @default(now())
+  created_by                         String
+  updated_at                         DateTime                             @default(now())
+  updated_by                         String?
+  deleted_at                         DateTime?
+  deleted_by                         String?
+  rekomendasi_penetapan_relasi_pasal rekomendasi_penetapan_relasi_pasal[]
+}
+
+model rekomendasi_penetapan_peringkat {
+  id                    String                  @id
+  nama_peringkat        String
+  aktif                 Boolean                 @default(true)
+  created_at            DateTime                @default(now())
+  created_by            String
+  updated_at            DateTime                @default(now())
+  updated_by            String?
+  deleted_at            DateTime?
+  deleted_by            String?
+  rekomendasi_penetapan rekomendasi_penetapan[]
+}
+
+model rekomendasi_penetapan_relasi_pasal {
+  id                          String                      @id
+  rekomendasi_penetapan_id    String
+  pasal_id                    String
+  created_at                  DateTime                    @default(now())
+  created_by                  String
+  updated_at                  DateTime                    @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  rekomendasi_penetapan_pasal rekomendasi_penetapan_pasal @relation(fields: [pasal_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_penetapan       rekomendasi_penetapan       @relation(fields: [rekomendasi_penetapan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model rekomendasi_penetapan_tacb {
+  id                       String                @id
+  rekomendasi_penetapan_id String
+  tacb_id                  String
+  tacb_email               String?
+  tacb_name                String?
+  tacb_user_level          String?
+  tacb_upt                 String?
+  tacb_provinsi_id         String?
+  tacb_provinsi            String?
+  tacb_kabupaten_id        String?
+  tacb_kabupaten           String?
+  created_at               DateTime              @default(now())
+  created_by               String
+  updated_at               DateTime              @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  rekomendasi_penetapan    rekomendasi_penetapan @relation(fields: [rekomendasi_penetapan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  clients                  clients               @relation(fields: [tacb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model rekomendasi_wbtb {
+  id                                  String               @id
+  nomor                               String?
+  tanggal_penetapan                   DateTime?
+  kode_penetapan                      String?
+  nama_karya_budaya                   String
+  domain                              String
+  kondisi_karya_budaya                String
+  lokasi_provinsi_id                  String?
+  lokasi_kabupaten_id                 String?
+  deskripsi_karya_budaya              String?
+  upaya_pelestarian_karya_budaya      String?
+  referensi                           String?
+  dokumen_surat_persetujuan_path      String?
+  dokumen_surat_persetujuan_mime_type String?
+  dokumen_surat_persetujuan_size      Int?
+  dokumen_surat_persetujuan_checksum  String?
+  nama_petugas_penerima_formulir      String?
+  tempat_menerima_formulir            String?
+  tanggal_menerima_formulir           DateTime?
+  status                              String               @default("draft")
+  created_at                          DateTime             @default(now())
+  created_by                          String
+  updated_at                          DateTime             @default(now())
+  updated_by                          String?
+  deleted_at                          DateTime?
+  deleted_by                          String?
+  tahun                               Int
+  bulan                               Int
+  status_administrasi                 String?              @default("Diterima")
+  status_substansi                    String?
+  status_verifikasi                   String?
+  status_sidang                       String?
+  status_administrasi_keterangan      String?
+  status_substansi_keterangan         String?
+  status_verifikasi_keterangan        String?
+  status_sidang_keterangan            String?
+  sk_penetapan_path                   String?
+  sk_penetapan_mime_type              String?
+  sk_penetapan_size                   Int?
+  sk_penetapan_checksum               String?
+  dapobud_id                          String
+  dapobud                             dapobud              @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  wbtb_dapobud                        wbtb_dapobud[]
+  wbtb_domain                         wbtb_domain[]
+  wbtb_foto                           wbtb_foto[]
+  wbtb_kajian                         wbtb_kajian[]
+  wbtb_kondisi                        wbtb_kondisi[]
+  wbtb_lembaga                        wbtb_lembaga[]
+  wbtb_tenaga_budaya                  wbtb_tenaga_budaya[]
+  wbtb_video                          wbtb_video[]
+}
+
+model relasi_cb_bangunan_bahan {
+  id                          String                   @id
+  master_cb_bangunan_bahan_id String
+  cb_bangunan_id              String
+  created_at                  DateTime                 @default(now())
+  created_by                  String
+  updated_at                  DateTime                 @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  cb_bangunan                 cb_bangunan              @relation(fields: [cb_bangunan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_bangunan_bahan    master_cb_bangunan_bahan @relation(fields: [master_cb_bangunan_bahan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_bangunan_fungsi {
+  id                           String                    @id
+  master_cb_bangunan_fungsi_id String
+  cb_bangunan_id               String
+  created_at                   DateTime                  @default(now())
+  created_by                   String
+  updated_at                   DateTime                  @default(now())
+  updated_by                   String?
+  deleted_at                   DateTime?
+  deleted_by                   String?
+  cb_bangunan                  cb_bangunan               @relation(fields: [cb_bangunan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_bangunan_fungsi    master_cb_bangunan_fungsi @relation(fields: [master_cb_bangunan_fungsi_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_bangunan_ornamen {
+  id                            String                     @id
+  master_cb_bangunan_ornamen_id String
+  cb_bangunan_id                String
+  created_at                    DateTime                   @default(now())
+  created_by                    String
+  updated_at                    DateTime                   @default(now())
+  updated_by                    String?
+  deleted_at                    DateTime?
+  deleted_by                    String?
+  cb_bangunan                   cb_bangunan                @relation(fields: [cb_bangunan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_bangunan_ornamen    master_cb_bangunan_ornamen @relation(fields: [master_cb_bangunan_ornamen_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_bangunan_tanda {
+  id                          String                   @id
+  master_cb_bangunan_tanda_id String
+  cb_bangunan_id              String
+  created_at                  DateTime                 @default(now())
+  created_by                  String
+  updated_at                  DateTime                 @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  cb_bangunan                 cb_bangunan              @relation(fields: [cb_bangunan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_bangunan_tanda    master_cb_bangunan_tanda @relation(fields: [master_cb_bangunan_tanda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_benda_bahan {
+  id                       String                @id
+  master_cb_benda_bahan_id String
+  cb_benda_id              String
+  created_at               DateTime              @default(now())
+  created_by               String
+  updated_at               DateTime              @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  cb_benda                 cb_benda              @relation(fields: [cb_benda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_benda_bahan    master_cb_benda_bahan @relation(fields: [master_cb_benda_bahan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_benda_hiasan {
+  id                        String                 @id
+  master_cb_benda_hiasan_id String
+  cb_benda_id               String
+  created_at                DateTime               @default(now())
+  created_by                String
+  updated_at                DateTime               @default(now())
+  updated_by                String?
+  deleted_at                DateTime?
+  deleted_by                String?
+  cb_benda                  cb_benda               @relation(fields: [cb_benda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_benda_hiasan    master_cb_benda_hiasan @relation(fields: [master_cb_benda_hiasan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_benda_kelompok {
+  id                          String                   @id
+  master_cb_benda_kelompok_id String
+  cb_benda_id                 String
+  created_at                  DateTime                 @default(now())
+  created_by                  String
+  updated_at                  DateTime                 @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  cb_benda                    cb_benda                 @relation(fields: [cb_benda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_benda_kelompok    master_cb_benda_kelompok @relation(fields: [master_cb_benda_kelompok_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_benda_tanda {
+  id                       String                @id
+  master_cb_benda_tanda_id String
+  cb_benda_id              String
+  created_at               DateTime              @default(now())
+  created_by               String
+  updated_at               DateTime              @default(now())
+  updated_by               String?
+  deleted_at               DateTime?
+  deleted_by               String?
+  cb_benda                 cb_benda              @relation(fields: [cb_benda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_benda_tanda    master_cb_benda_tanda @relation(fields: [master_cb_benda_tanda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_kawasan_fungsi {
+  id                          String                   @id
+  master_cb_kawasan_fungsi_id String
+  cb_kawasan_id               String
+  created_at                  DateTime                 @default(now())
+  created_by                  String
+  updated_at                  DateTime                 @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  cb_kawasan                  cb_kawasan               @relation(fields: [cb_kawasan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_kawasan_fungsi    master_cb_kawasan_fungsi @relation(fields: [master_cb_kawasan_fungsi_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_situs_kelompok {
+  id                          String                   @id
+  master_cb_situs_kelompok_id String
+  cb_situs_id                 String
+  created_at                  DateTime                 @default(now())
+  created_by                  String
+  updated_at                  DateTime                 @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  cb_situs                    cb_situs                 @relation(fields: [cb_situs_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_situs_kelompok    master_cb_situs_kelompok @relation(fields: [master_cb_situs_kelompok_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_struktur_bahan {
+  id                          String                   @id
+  master_cb_struktur_bahan_id String
+  cb_struktur_id              String
+  created_at                  DateTime                 @default(now())
+  created_by                  String
+  updated_at                  DateTime                 @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  cb_struktur                 cb_struktur              @relation(fields: [cb_struktur_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_struktur_bahan    master_cb_struktur_bahan @relation(fields: [master_cb_struktur_bahan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_struktur_fungsi {
+  id                           String                    @id
+  master_cb_struktur_fungsi_id String
+  cb_struktur_id               String
+  created_at                   DateTime                  @default(now())
+  created_by                   String
+  updated_at                   DateTime                  @default(now())
+  updated_by                   String?
+  deleted_at                   DateTime?
+  deleted_by                   String?
+  cb_struktur                  cb_struktur               @relation(fields: [cb_struktur_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_struktur_fungsi    master_cb_struktur_fungsi @relation(fields: [master_cb_struktur_fungsi_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_struktur_ornamen {
+  id                            String                     @id
+  master_cb_struktur_ornamen_id String
+  cb_struktur_id                String
+  created_at                    DateTime                   @default(now())
+  created_by                    String
+  updated_at                    DateTime                   @default(now())
+  updated_by                    String?
+  deleted_at                    DateTime?
+  deleted_by                    String?
+  cb_struktur                   cb_struktur                @relation(fields: [cb_struktur_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_struktur_ornamen    master_cb_struktur_ornamen @relation(fields: [master_cb_struktur_ornamen_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_cb_struktur_tanda {
+  id                          String                   @id
+  master_cb_struktur_tanda_id String
+  cb_struktur_id              String
+  created_at                  DateTime                 @default(now())
+  created_by                  String
+  updated_at                  DateTime                 @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  cb_struktur                 cb_struktur              @relation(fields: [cb_struktur_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_cb_struktur_tanda    master_cb_struktur_tanda @relation(fields: [master_cb_struktur_tanda_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_lk_dokumen_legalitas {
+  id         String    @id
+  lk_id      String
+  path       String?
+  nama       String?
+  mime_type  String?
+  ukuran     Float?
+  checksum   String?
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+  lk         lk        @relation(fields: [lk_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_lk_riwayat_aktivitas {
+  id                                String                            @id
+  nama_aktivitas                    String
+  jenis_aktivitas_id                String
+  tingkat_id                        String
+  penyelenggara                     String
+  tahun                             Int
+  created_at                        DateTime                          @default(now())
+  created_by                        String
+  updated_at                        DateTime                          @default(now())
+  updated_by                        String?
+  deleted_at                        DateTime?
+  deleted_by                        String?
+  lk_id                             String
+  master_lk_riwayat_aktivitas_jenis master_lk_riwayat_aktivitas_jenis @relation(fields: [jenis_aktivitas_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  lk                                lk                                @relation(fields: [lk_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_lk_riwayat_tingkat         master_lk_riwayat_tingkat         @relation(fields: [tingkat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_lk_riwayat_penghargaan {
+  id                        String                    @id
+  nama_penghargaan          String
+  tingkat_id                String
+  pemberi                   String
+  tahun                     Int
+  dokument_path             String
+  dokumen_mime_type         String
+  dokumen_caption           String
+  created_at                DateTime                  @default(now())
+  created_by                String
+  updated_at                DateTime                  @default(now())
+  updated_by                String?
+  deleted_at                DateTime?
+  deleted_by                String?
+  lk_id                     String
+  lk                        lk                        @relation(fields: [lk_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_lk_riwayat_tingkat master_lk_riwayat_tingkat @relation(fields: [tingkat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_spasial_raster {
+  id         String    @id
+  data_id    String
+  path       String?
+  cb_type    String?
+  nama       String?
+  mime_type  String?
+  ukuran     Float?
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+}
+
+model relasi_spasial_vektor {
+  id         String    @id
+  data_id    String
+  path       String?
+  cb_type    String?
+  nama       String?
+  mime_type  String?
+  ukuran     Float?
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+}
+
+model relasi_tb_aktivitas_budaya {
+  id                          String                      @id
+  nama_kegiatan               String?
+  peran                       String
+  tingkat_kegiatan_id         String
+  penyelenggara               String
+  tahun_kegiatan              Int
+  created_at                  DateTime                    @default(now())
+  created_by                  String
+  updated_at                  DateTime                    @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  tb_id                       String
+  tb                          tb                          @relation(fields: [tb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_tb_tingkat_pelatihan master_tb_tingkat_pelatihan @relation(fields: [tingkat_kegiatan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model relasi_tb_pekerjaan {
+  id                     String    @id
+  nama_pekerjaan         String?
+  nama_kantor            String
+  jabatan                String
+  status_kontrak         String
+  tanggal_mulai_kerja    DateTime
+  tanggal_berhenti_kerja DateTime?
+  created_at             DateTime  @default(now())
+  created_by             String
+  updated_at             DateTime  @default(now())
+  updated_by             String?
+  deleted_at             DateTime?
+  deleted_by             String?
+  tb_id                  String
+  tb                     tb        @relation(fields: [tb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_tb_pelatihan {
+  id                          String                      @id
+  nama_pelatihan              String
+  jenis_pelatihan_id          String
+  tingkat_pelatihan_id        String
+  peran_pelatihan_id          String
+  penyelenggara               String
+  tahun_penyelenggaraan       Int
+  sertifikat_pelatihan        String
+  created_at                  DateTime                    @default(now())
+  created_by                  String
+  updated_at                  DateTime                    @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  tb_id                       String
+  sertifikat_mimetype         String
+  master_tb_jenis_pelatihan   master_tb_jenis_pelatihan   @relation(fields: [jenis_pelatihan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_tb_peran_pelatihan   master_tb_peran_pelatihan   @relation(fields: [peran_pelatihan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tb                          tb                          @relation(fields: [tb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_tb_tingkat_pelatihan master_tb_tingkat_pelatihan @relation(fields: [tingkat_pelatihan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_tb_pendidikan {
+  id                           String                       @id
+  jenjang_pendidikan_id        String
+  program_studi                String?
+  nama_sekolah                 String
+  provinsi_id                  String?
+  kabupaten_id                 String?
+  tahun_lulus                  Int?
+  created_at                   DateTime                     @default(now())
+  created_by                   String
+  updated_at                   DateTime                     @default(now())
+  updated_by                   String?
+  deleted_at                   DateTime?
+  deleted_by                   String?
+  tb_id                        String
+  path                         String?
+  mime_type                    String?
+  size                         Float?
+  checksum                     Float?
+  master_tb_jenjang_pendidikan master_tb_jenjang_pendidikan @relation(fields: [jenjang_pendidikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tb                           tb                           @relation(fields: [tb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model relasi_tb_penghargaan {
+  id                          String                      @id
+  nama_penghargaan            String?
+  peran                       String?
+  tingkat_penghargaan_id      String
+  pihak_pemberi_penghargaan   String
+  tahun_penghargaan           Int
+  created_at                  DateTime                    @default(now())
+  created_by                  String
+  updated_at                  DateTime                    @default(now())
+  updated_by                  String?
+  deleted_at                  DateTime?
+  deleted_by                  String?
+  tb_id                       String
+  path                        String?
+  mime_type                   String?
+  size                        Float?
+  checksum                    Float?
+  tb                          tb                          @relation(fields: [tb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_tb_tingkat_pelatihan master_tb_tingkat_pelatihan @relation(fields: [tingkat_penghargaan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model role_has_permissions {
+  permission_id BigInt
+  role_id       BigInt
+  permissions   permissions @relation(fields: [permission_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  roles         roles       @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([permission_id, role_id])
+}
+
+model roles {
+  id                   BigInt                 @id @default(autoincrement())
+  name                 String
+  guard_name           String
+  created_at           DateTime?
+  updated_at           DateTime?
+  model_has_roles      model_has_roles[]
+  role_has_permissions role_has_permissions[]
+
+  @@unique([name, guard_name])
+}
+
+model sarpras {
+  id                                String                            @id
+  dapobud_id                        String                            @unique(map: "sarpras_dapobud_id_unique")
+  nama_sarpras                      String
+  provinsi_id                       String?
+  kabupaten_id                      String?
+  kecamatan_id                      String?
+  desa_id                           String?
+  alamat                            String?
+  latitude                          Float?
+  longitude                         Float?
+  kontak_nama                       String?
+  kontak_nomor_hp                   String?
+  status_kepemilikan_id             String
+  nama_pemilik                      String?
+  nama_pengelola                    String?
+  created_at                        DateTime                          @default(now())
+  created_by                        String
+  updated_at                        DateTime                          @default(now())
+  updated_by                        String?
+  deleted_at                        DateTime?
+  deleted_by                        String?
+  deskripsi                         String?
+  foto_papan_nama_path              String?
+  foto_bangunan_tampak_depan_path   String?
+  foto_bangunan_tampak_dalam_path   String?
+  dapobud                           dapobud                           @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  master_sarpras_status_kepemilikan master_sarpras_status_kepemilikan @relation(fields: [status_kepemilikan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  sarpras_fasilitas                 sarpras_fasilitas[]
+}
+
+model sarpras_fasilitas {
+  id             String    @id
+  sarpras_id     String
+  nama_fasilitas String
+  jumlah         Int
+  satuan         String
+  created_at     DateTime  @default(now())
+  created_by     String
+  updated_at     DateTime  @default(now())
+  updated_by     String?
+  deleted_at     DateTime?
+  deleted_by     String?
+  sarpras        sarpras   @relation(fields: [sarpras_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String?
+  auth_srid Int?
+  srtext    String?
+  proj4text String?
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model tb {
+  id                         String                       @id
+  dapobud_id                 String                       @unique(map: "tb_dapobud_id_unique")
+  nama_lengkap               String
+  gelar_pendidikan           String?
+  kewarganegaraan            String?
+  identitas                  String?
+  foto_identitas             String?
+  nomor_identitas            String?
+  tempat_lahir               String?
+  tanggal_lahir              DateTime?
+  jenis_kelamin              String?
+  agama                      String?
+  provinsi_id                String?
+  kabupaten_id               String?
+  kecamatan_id               String?
+  desa_id                    String?
+  alamat                     String?
+  latitude                   Float?
+  longitude                  Float?
+  nomor_hp                   String?
+  email                      String?
+  alamat_website             String?
+  akun_facebook              String?
+  akun_twitter               String?
+  akun_instagram             String?
+  akun_youtube               String?
+  nama_ayah                  String?
+  nama_ibu                   String?
+  pas_foto                   String?
+  created_at                 DateTime                     @default(now())
+  created_by                 String
+  updated_at                 DateTime                     @default(now())
+  updated_by                 String?
+  deleted_at                 DateTime?
+  deleted_by                 String?
+  nama_alias                 String?
+  relasi_tb_aktivitas_budaya relasi_tb_aktivitas_budaya[]
+  relasi_tb_pekerjaan        relasi_tb_pekerjaan[]
+  relasi_tb_pelatihan        relasi_tb_pelatihan[]
+  relasi_tb_pendidikan       relasi_tb_pendidikan[]
+  relasi_tb_penghargaan      relasi_tb_penghargaan[]
+  dapobud                    dapobud                      @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  wbtb_tenaga_budaya         wbtb_tenaga_budaya[]
+}
+
+model users {
+  id                String    @id
+  name              String
+  email             String    @unique(map: "users_email_unique")
+  email_verified_at DateTime?
+  password          String
+  remember_token    String?
+  created_at        DateTime?
+  updated_at        DateTime?
+  status            Boolean   @default(true)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model verval {
+  id              String           @id
+  dapobud_id      String
+  tanggal         DateTime
+  catatan         String?
+  status          String           @default("draft")
+  created_at      DateTime         @default(now())
+  created_by      String
+  updated_at      DateTime         @default(now())
+  updated_by      String?
+  deleted_at      DateTime?
+  deleted_by      String?
+  dapobud         dapobud          @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  verval_lampiran verval_lampiran?
+}
+
+model verval_lampiran {
+  id         String    @id
+  data_id    String    @unique(map: "verval_lampiran_data_id_unique")
+  path       String?
+  nama       String?
+  mime_type  String?
+  size       Float?
+  checksum   Float?
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime  @default(now())
+  updated_by String?
+  deleted_at DateTime?
+  deleted_by String?
+  verval     verval    @relation(fields: [data_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_dapobud {
+  id               String           @id
+  wbtb_id          String
+  dapobud_id       String
+  created_at       DateTime         @default(now())
+  created_by       String
+  updated_at       DateTime         @default(now())
+  updated_by       String?
+  deleted_at       DateTime?
+  deleted_by       String?
+  dapobud          dapobud          @relation(fields: [dapobud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_wbtb rekomendasi_wbtb @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_domain {
+  id                 String             @id
+  wbtb_id            String
+  domain_id          String
+  prioritas          Boolean
+  created_at         DateTime           @default(now())
+  created_by         String
+  updated_at         DateTime           @default(now())
+  updated_by         String?
+  deleted_at         DateTime?
+  deleted_by         String?
+  master_wbtb_domain master_wbtb_domain @relation(fields: [domain_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_wbtb   rekomendasi_wbtb   @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_foto {
+  id               String           @id
+  wbtb_id          String
+  path             String
+  caption          String
+  mime_type        String
+  size             Int
+  checksum         String
+  created_at       DateTime         @default(now())
+  created_by       String
+  updated_at       DateTime         @default(now())
+  updated_by       String?
+  deleted_at       DateTime?
+  deleted_by       String?
+  rekomendasi_wbtb rekomendasi_wbtb @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_kajian {
+  id               String           @id
+  wbtb_id          String
+  kajian           String
+  path             String
+  caption          String
+  mime_type        String
+  size             Int
+  checksum         String
+  created_at       DateTime         @default(now())
+  created_by       String
+  updated_at       DateTime         @default(now())
+  updated_by       String?
+  deleted_at       DateTime?
+  deleted_by       String?
+  rekomendasi_wbtb rekomendasi_wbtb @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_kondisi {
+  id                  String              @id
+  wbtb_id             String
+  kondisi_id          String
+  created_at          DateTime            @default(now())
+  created_by          String
+  updated_at          DateTime            @default(now())
+  updated_by          String?
+  deleted_at          DateTime?
+  deleted_by          String?
+  master_wbtb_kondisi master_wbtb_kondisi @relation(fields: [kondisi_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_wbtb    rekomendasi_wbtb    @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_lembaga {
+  id               String           @id
+  wbtb_id          String
+  lk_id            String
+  created_at       DateTime         @default(now())
+  created_by       String
+  updated_at       DateTime         @default(now())
+  updated_by       String?
+  deleted_at       DateTime?
+  deleted_by       String?
+  lk               lk               @relation(fields: [lk_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_wbtb rekomendasi_wbtb @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_tenaga_budaya {
+  id               String           @id
+  wbtb_id          String
+  tb_id            String
+  created_at       DateTime         @default(now())
+  created_by       String
+  updated_at       DateTime         @default(now())
+  updated_by       String?
+  deleted_at       DateTime?
+  deleted_by       String?
+  tb               tb               @relation(fields: [tb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rekomendasi_wbtb rekomendasi_wbtb @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model wbtb_video {
+  id               String           @id
+  wbtb_id          String
+  url              String
+  label            String
+  created_at       DateTime         @default(now())
+  created_by       String
+  updated_at       DateTime         @default(now())
+  updated_by       String?
+  deleted_at       DateTime?
+  deleted_by       String?
+  rekomendasi_wbtb rekomendasi_wbtb @relation(fields: [wbtb_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
