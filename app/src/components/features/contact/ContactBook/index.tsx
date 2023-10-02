@@ -1,24 +1,36 @@
-import { DefaultTable } from '@/components'
-import React from 'react'
+import { DefaultTable } from "@/components";
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 export function ContactBook({}: Props) {
-  return (
-   <DefaultTable
-   minWidth={340}
-   sameWidthColumns
-   columns={[
-    {accessor: 'name', title: 'Name',},
-    {accessor: 'email', title: 'Email'}
-   ]}
+  const [contacts, setContacts] = React.useState<any[]>([
+    { name: "", email: "", id: "" },
+  ]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      return await (global as any).contact.getContact();
+    };
 
-   records={[
-    {name: 'Rijal', email: 'zalghod@gmail.com',  id: '1'},
-    {name: 'Rijal', email: 'zalghod@gmail.com', id: '2'},
-    {name: 'Rijal', email: 'zalghod@gmail.com',  id: '3'},
-   ]}
-   
-   />
-  )
+    fetchData()
+      .then((res) => {
+        setContacts(res?.data);
+        console.log("response aja", res);
+      })
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
+
+  return (
+    <DefaultTable
+      minWidth={340}
+      sameWidthColumns
+      columns={[
+        { accessor: "name", title: "Name" },
+        { accessor: "email", title: "Email" },
+      ]}
+      // records={contacts?.map((v) => v)}
+      records={contacts ?? [{ name: "", email: "", id: "" }]}
+    />
+  );
 }

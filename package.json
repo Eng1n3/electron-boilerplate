@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "install:all": "concurrently \"cd app && npm install\" \"npm install\"",
-    "start:dev:win": "concurrently cross-env NODE_ENV=dev && \"cd app && npm run dev\" \"electronmon .\"",
+    "start:dev:win": "concurrently \"cd app && cross-env NODE_ENV=dev npm run dev\" \"cross-env NODE_ENV=dev electronmon .\"",
     "start:dev:linux": "concurrently \"cd app && NODE_ENV=dev npm run dev\" \"NODE_ENV=dev electronmon .\"",
     "build:front:dev:win": "cd app && cross-env NODE_ENV=dev && npm run build",
     "build:front:dev:linux": "cd app && NODE_ENV=dev npm run build",
@@ -27,9 +27,11 @@
     "concurrently": "^8.2.1",
     "cross-env": "^7.0.3",
     "electron": "^26.2.2",
-    "electronmon": "^2.0.2"
+    "electronmon": "^2.0.2",
+    "prisma": "^5.3.1"
   },
   "dependencies": {
+    "@prisma/client": "^5.3.1",
     "electron-squirrel-startup": "^1.0.0",
     "url": "^0.11.3"
   }

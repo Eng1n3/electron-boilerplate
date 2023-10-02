@@ -5,20 +5,9 @@ import React, { useEffect } from "react";
 type Props = {};
 
 export function ContactForm({}: Props) {
-  useEffect(() => {
-    const fetchData = async () => {
-      return await (global as any).contact.getContact();
-    };
-
-    const result = fetchData()
-      .then(console.log)
-      // make sure to catch any error
-      .catch(console.error);
-  });
-
   const submitHandle = async () => {
     const dapobud = await global.contact.createContact(form.values);
-    console.log(dapobud, 11);
+    console.log("handle submit", dapobud);
   };
 
   const form = useForm({

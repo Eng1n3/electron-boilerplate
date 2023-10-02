@@ -1,20 +1,20 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
-const { dapobudLocalIpc } = require("./ipc/dapobud-local.ipc");
+// const { dapobudLocalIpc } = require("./ipc/dapobud-local.ipc");
 const { contactIpc, contactIpcWindow } = require("./ipc/contact.ipc");
 
 const { PrismaClient: ContactPrisma } = require("./prisma/generated/contact");
-const {
-  PrismaClient: DapobudLocalPrisma,
-} = require("./prisma/generated/dapobud-local");
-const {
-  PrismaClient: DapobudServerPrisma,
-} = require("./prisma/generated/dapobud-server");
+// const {
+//   PrismaClient: DapobudLocalPrisma,
+// } = require("./prisma/generated/dapobud-local");
+// const {
+//   PrismaClient: DapobudServerPrisma,
+// } = require("./prisma/generated/dapobud-server");
 
 const contactPrisma = new ContactPrisma();
-const dapobudLocalPrisma = new DapobudLocalPrisma();
-const dapobudServerPrisma = new DapobudServerPrisma();
+// const dapobudLocalPrisma = new DapobudLocalPrisma();
+// const dapobudServerPrisma = new DapobudServerPrisma();
 const isDev = process.env.NODE_ENV === "dev";
 
 function createWindow() {
