@@ -1,1 +1,2 @@
-export * from "./detect-route"
+export * from "./detect-route";
+export * from "./useRefetchContacts";

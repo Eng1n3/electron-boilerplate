@@ -1,21 +1,26 @@
+import { useRefetchContacts } from "@/utils";
 import { Box, Button, Group, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useEffect } from "react";
 
-type Props = {};
+export type ContactFormValues = {
+  name: string;
+  email: string;
+};
 
-export function ContactForm({}: Props) {
+type Props = {
+  onSubmit?: (values?: ContactFormValues) => void;
+  initialValues?: ContactFormValues;
+};
+
+export function ContactForm(props: Props) {
   const submitHandle = async () => {
-    const dapobud = await global.contact.createContact(form.values);
-    console.log("handle submit", dapobud);
+    console.log("Submit Handle");
+    props.onSubmit?.(form.values);
   };
 
-  const form = useForm({
-    initialValues: {
-      email: "",
-      name: "",
-    },
-
+  const form = useForm<ContactFormValues>({
+    initialValues: props.initialValues,
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
@@ -23,7 +28,7 @@ export function ContactForm({}: Props) {
 
   return (
     <Box maw={340}>
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={submitHandle}>
         <Stack spacing={12}>
           <TextInput
             withAsterisk
@@ -43,7 +48,13 @@ export function ContactForm({}: Props) {
           />
 
           <Group spacing="flex-end" mt={8}>
-            <Button type="submit" onClick={submitHandle}>
+            <Button
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                submitHandle();
+              }}
+            >
               Add Contact
             </Button>
           </Group>

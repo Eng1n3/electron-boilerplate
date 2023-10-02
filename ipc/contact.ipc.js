@@ -43,4 +43,16 @@ exports.contactIpc = async (ipcMain, prisma) => {
       data: contact,
     };
   });
+
+  ipcMain.handle("get-one-contact", async (event, value) => {
+    const contact = await prisma.contact.findUnique({
+      where: { id: value },
+    });
+
+    return {
+      statusCode: 200,
+      message: "Success get data contact",
+      data: contact,
+    };
+  });
 };
