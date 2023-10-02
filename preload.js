@@ -13,6 +13,8 @@ contextBridge.exposeInMainWorld("dapobudLocal", {
 });
 
 contextBridge.exposeInMainWorld("contact", {
+  deleteContact: (value) => ipcRenderer.invoke("delete-contact", value),
+  updateContact: (value) => ipcRenderer.invoke("update-contact", value),
   getContact: (value) => ipcRenderer.invoke("get-contact", value),
   createContact: (value) => ipcRenderer.invoke("create-contact", value),
 });
