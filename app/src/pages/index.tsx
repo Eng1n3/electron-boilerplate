@@ -1,4 +1,9 @@
-import { ContactForm, DefaultLayout, ContactBook } from "@/components";
+import {
+  ContactForm,
+  DefaultLayout,
+  ContactBook,
+  ContactCreateForm,
+} from "@/components";
 import { Flex, Grid, Title } from "@mantine/core";
 
 export default function HomePage() {
@@ -9,7 +14,7 @@ export default function HomePage() {
           <Title order={2} className="heading3" mb="sm">
             Add New Contact
           </Title>
-          <ContactForm />
+          <ContactCreateForm />
         </Grid.Col>
         <Grid.Col span={12} sm={6}>
           <Title order={2} className="heading3" mb="sm">

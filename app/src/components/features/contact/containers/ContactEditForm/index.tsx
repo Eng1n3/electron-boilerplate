@@ -63,6 +63,7 @@ import { useRefetchContacts } from "@/utils";
 import { Box, Button, Group, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useEffect } from "react";
+import { ContactForm } from "../..";
 
 export type ContactFormValues = {
   name: string;
@@ -75,7 +76,10 @@ type Props = {
 
 export function ContactEditForm(props: Props) {
   const submitHandle = async () => {
-    await global.contact.updateContact({ ...form.values, id: props.contactId });
+    await global.contact.updateContact({
+      ...methods.values,
+      id: props.contactId,
+    });
     console.log("Submit Handle");
   };
 
@@ -86,7 +90,7 @@ export function ContactEditForm(props: Props) {
   React.useEffect(() => {
     getOneContact()
       .then((res) => {
-        form.setValues({
+        methods.setValues({
           email: res.data?.email,
           name: res.data?.name,
         });
@@ -96,7 +100,7 @@ export function ContactEditForm(props: Props) {
       .catch(console.error);
   }, []);
 
-  const form = useForm<ContactFormValues>({
+  const methods = useForm<ContactFormValues>({
     initialValues: {
       email: "",
       name: "",
@@ -108,38 +112,11 @@ export function ContactEditForm(props: Props) {
 
   return (
     <Box maw={340}>
-      <form onSubmit={submitHandle}>
-        <Stack spacing={12}>
-          <TextInput
-            withAsterisk
-            label="Email"
-            placeholder="Enter the contact email"
-            radius="md"
-            size="sm"
-            {...form.getInputProps("email")}
-          />
-          <TextInput
-            withAsterisk
-            label="Nama"
-            placeholder="Enter the contact name"
-            radius="md"
-            size="sm"
-            {...form.getInputProps("name")}
-          />
-
-          <Group spacing="flex-end" mt={8}>
-            <Button
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                submitHandle();
-              }}
-            >
-              Edit Contact
-            </Button>
-          </Group>
-        </Stack>
-      </form>
+      <ContactForm
+        methods={methods}
+        submitLabel="Edit"
+        onSubmit={submitHandle}
+      />
     </Box>
   );
 }
