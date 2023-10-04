@@ -13,7 +13,8 @@
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "release": "webpack --config=build/webpack.app.config.js --env=production && electron-builder --linux deb"
   },
   "author": "Antifragile Code",
   "license": "ISC",
@@ -31,8 +32,35 @@
     "prisma": "^5.3.1"
   },
   "dependencies": {
+    "@electron/rebuild": "^3.3.0",
     "@prisma/client": "^5.3.1",
+    "electron-builder": "^24.6.4",
     "electron-squirrel-startup": "^1.0.0",
-    "url": "^0.11.3"
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6",
+    "url": "^0.11.3",
+    "uuid": "^9.0.1"
+  },
+  "build": {
+    "asar": true,
+    "appId": "com.electron.dapobud",
+    "files": [
+      "main.js",
+      "preload.js",
+      "prisma/**/*",
+      "ipc/**/*",
+      "app/out/**/*",
+      "app/public/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "resources"
+    },
+    "publish": null,
+    "extends": null,
+    "extraMetadata": {
+      "main": "main.js"
+    }
   }
 }

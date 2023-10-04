@@ -5,6 +5,5 @@
 /app/next-env.d.ts
 /out/
 /prisma/*.sqlite
-/prisma/*.sqlite-journal
-/prisma/generated
+/prisma/*/**.sqlite-journal
 /prisma/migrations
