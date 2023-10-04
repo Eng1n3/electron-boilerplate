@@ -1,7 +1,7 @@
-import { Button, ButtonProps, Stack, Text } from '@mantine/core';
-import React from 'react';
+import { Button, ButtonProps, Stack, Text } from "@mantine/core";
+import React from "react";
 
-import LaptopMan from '~/illustrations/laptop-map.svg';
+import LaptopMan from "~/illustrations/laptop-map.svg";
 
 interface IResetButtonProps extends ButtonProps {
   label?: string;
@@ -16,7 +16,8 @@ export interface IEmptyTableStateProps {
 export function EmptyTableState(props: IEmptyTableStateProps) {
   return (
     <Stack align="center" spacing="lg" p="sm" pt="0px" pb="lg">
-      <LaptopMan />
+      <Text>Empty</Text>
+      {/* <LaptopMan />
       <Stack align="center" spacing={6}>
         <Text
           align="center"
@@ -31,7 +32,7 @@ export function EmptyTableState(props: IEmptyTableStateProps) {
             {props.resetButtonProps.label ?? 'Atur ulang filter'}
           </Button>
         )}
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 }

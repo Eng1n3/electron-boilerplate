@@ -19,12 +19,14 @@
     "@mantine/modals": "^6.0.21",
     "@mantine/next": "^6.0.21",
     "@mantine/notifications": "^6.0.21",
+    "@tabler/icons-react": "^2.38.0",
     "dayjs": "^1.11.10",
     "mantine-datatable": "^2.9.14",
     "next": "latest",
     "nextjs-progressbar": "^0.0.16",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/node": "latest",
