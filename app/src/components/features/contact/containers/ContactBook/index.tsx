@@ -11,9 +11,7 @@ export function ContactBook({}: Props) {
   const [opened, { close, open }] = useDisclosure();
   const [contactId, setContactId] = React.useState();
   const foo = useRefetchContacts((state) => state);
-  const [contacts, setContacts] = React.useState<any[]>([
-    { name: "", email: "", id: "" },
-  ]);
+  const [contacts, setContacts] = React.useState<any[]>([]);
 
   const fetchData = async () => {
     return await (global as any).contact.getContact();
@@ -26,6 +24,7 @@ export function ContactBook({}: Props) {
   React.useEffect(() => {
     fetchData()
       .then((res) => {
+        console.log(res);
         setContacts(res?.data);
       })
       // make sure to catch any error
@@ -80,7 +79,7 @@ export function ContactBook({}: Props) {
             ),
           },
         ]}
-        records={contacts ?? [{ name: "", email: "", id: "" }]}
+        records={contacts ?? []}
       />
       <Modal opened={opened} onClose={close} radius="lg">
         <Title order={2} className="heading3" mb="sm">

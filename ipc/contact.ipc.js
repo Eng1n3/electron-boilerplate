@@ -38,7 +38,7 @@ exports.contactIpc = async (ipcMain, contactDb) => {
   });
 
   ipcMain.handle("get-contact", async (event, value) => {
-    const [contacts] = await contactDb.all(`SELECT * FROM contact`);
+    const contacts = await contactDb.all(`SELECT * FROM contact`);
     return {
       statusCode: 200,
       message: "Success get data contact",
@@ -47,14 +47,13 @@ exports.contactIpc = async (ipcMain, contactDb) => {
   });
 
   ipcMain.handle("get-one-contact", async (event, value) => {
-    const contact = await prisma.contact.findUnique({
-      where: { id: value },
-    });
-
+    const contacts = await contactDb.all(`SELECT * FROM contact WHERE id = ?`, [
+      value.id,
+    ]);
     return {
       statusCode: 200,
       message: "Success get data contact",
-      data: contact,
+      data: contacts[0],
     };
   });
 };

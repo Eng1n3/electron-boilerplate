@@ -80,7 +80,7 @@ export function ContactEditForm(props: Props) {
   };
 
   const getOneContact = async () => {
-    return await global.contact.getOneContact(props.contactId);
+    return await global.contact.getOneContact({ id: props.contactId });
   };
 
   React.useEffect(() => {
