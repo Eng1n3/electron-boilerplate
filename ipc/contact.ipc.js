@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 exports.contactIpc = async (ipcMain, contactDb) => {
   ipcMain.handle("delete-contact", async (event, value) => {
     const result = await contactDb.run(
-      `UPDATE SET contact deletedAt = now() where id = ?`,
+      `UPDATE contact SET deleteAt = DATE() where id = ?`,
       value.id
     );
     return {
@@ -15,7 +15,7 @@ exports.contactIpc = async (ipcMain, contactDb) => {
 
   ipcMain.handle("update-contact", async (event, value) => {
     const result = await contactDb.run(
-      `UPDATE SET contact email = ?, name = ? WHERE id = ?`,
+      `UPDATE contact SET email = ?, name = ? WHERE id = ?`,
       [value.email, value.name, value.id]
     );
     return {
@@ -38,7 +38,9 @@ exports.contactIpc = async (ipcMain, contactDb) => {
   });
 
   ipcMain.handle("get-contact", async (event, value) => {
-    const contacts = await contactDb.all(`SELECT * FROM contact`);
+    const contacts = await contactDb.all(
+      `SELECT * FROM contact WHERE deleteAt is NULL`
+    );
     return {
       statusCode: 200,
       message: "Success get data contact",
@@ -47,9 +49,10 @@ exports.contactIpc = async (ipcMain, contactDb) => {
   });
 
   ipcMain.handle("get-one-contact", async (event, value) => {
-    const contacts = await contactDb.all(`SELECT * FROM contact WHERE id = ?`, [
-      value.id,
-    ]);
+    const contacts = await contactDb.all(
+      `SELECT * FROM contact WHERE id = ? AND deleteAt is NULL`,
+      [value.id]
+    );
     return {
       statusCode: 200,
       message: "Success get data contact",

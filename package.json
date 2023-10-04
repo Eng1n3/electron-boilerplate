@@ -1,5 +1,5 @@
 {
-  "name": "my-electron-app",
+  "name": "contact-app-electron",
   "version": "1.0.0",
   "description": "Contact Management App",
   "main": "main.js",
