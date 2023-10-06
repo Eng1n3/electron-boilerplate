@@ -26,6 +26,7 @@
     "nextjs-progressbar": "^0.0.16",
     "react": "latest",
     "react-dom": "latest",
+    "react-hook-form": "^7.47.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {

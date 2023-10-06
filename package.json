@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@electron/rebuild": "^3.3.0",
+    "@hookform/resolvers": "^3.3.1",
     "@prisma/client": "^5.3.1",
     "electron-builder": "^24.6.4",
     "electron-squirrel-startup": "^1.0.0",
@@ -40,7 +41,8 @@
     "sqlite": "^5.0.1",
     "sqlite3": "^5.1.6",
     "url": "^0.11.3",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
   },
   "build": {
     "asar": true,
