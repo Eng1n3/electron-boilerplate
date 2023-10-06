@@ -16,7 +16,6 @@ export default function HomePage() {
         <Button
           leftIcon={<IconSend size={18} />}
           size="xs"
-          onClick={toggle}
           radius="md"
           color="indigo"
         >

@@ -68,10 +68,10 @@ export function ContactEditForm(props: Props) {
   } = methods;
 
   return (
-    <Box maw={500} my={40}>
+    <Box maw={500} w="100%">
       <Form grid={{ gutter: "xs" }} />
       <Box mt={25}>
-        <Form.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
+        <Form.Button fullWidth mt="xs" loading={isSubmitting} type="submit">
           {isSubmitting ? "Submitting..." : "Submit"}
         </Form.Button>
       </Box>

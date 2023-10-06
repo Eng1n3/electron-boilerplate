@@ -78,6 +78,7 @@ const useForm = <
   } = props;
 
   const methods = useHookForm<TFieldValues, TContext>({
+    // @ts-ignore
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: defaultValues as UseFormProps<
       TFieldValues,

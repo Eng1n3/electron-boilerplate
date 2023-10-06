@@ -8,7 +8,7 @@ import React from "react";
 type Props = {};
 
 export function ContactBook({}: Props) {
-  const [opened, { close, open }] = useDisclosure();
+  const [opened, { toggle }] = useDisclosure();
   const [contactId, setContactId] = React.useState();
   const foo = useRefetchContacts((state) => state);
   const [contacts, setContacts] = React.useState<any[]>([]);
@@ -64,7 +64,7 @@ export function ContactBook({}: Props) {
                   title="Edit"
                   onClick={() => {
                     setContactId(row.id);
-                    open();
+                    toggle();
                   }}
                   size={16}
                 >
@@ -86,10 +86,11 @@ export function ContactBook({}: Props) {
       />
       <Modal
         opened={opened}
-        onClose={close}
+        onClose={toggle}
         radius="lg"
         padding="lg"
         size="md"
+        withCloseButton
         title={
           <Title order={2} className="heading3">
             Edit Contact
