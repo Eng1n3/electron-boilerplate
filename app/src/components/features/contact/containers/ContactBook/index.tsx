@@ -24,8 +24,8 @@ export function ContactBook({}: Props) {
   React.useEffect(() => {
     fetchData()
       .then((res) => {
-        console.log(res);
-        setContacts(res?.data);
+        console.log("CONTACTS", res);
+        setContacts(res.data.data);
       })
       // make sure to catch any error
       .catch(console.error);
@@ -52,6 +52,9 @@ export function ContactBook({}: Props) {
         columns={[
           { accessor: "name", title: "Name" },
           { accessor: "email", title: "Email" },
+          { accessor: "phoneNumber", title: "Phone Number" },
+          { accessor: "photo", title: "Photo" },
+          { accessor: "gender", title: "Gender" },
           {
             accessor: "action",
             title: "Action",
@@ -81,10 +84,18 @@ export function ContactBook({}: Props) {
         ]}
         records={contacts ?? []}
       />
-      <Modal opened={opened} onClose={close} radius="lg">
-        <Title order={2} className="heading3" mb="sm">
-          Edit Contact
-        </Title>
+      <Modal
+        opened={opened}
+        onClose={close}
+        radius="lg"
+        padding="lg"
+        size="md"
+        title={
+          <Title order={2} className="heading3">
+            Edit Contact
+          </Title>
+        }
+      >
         <ContactEditForm contactId={contactId ?? ""} />
       </Modal>
     </>
