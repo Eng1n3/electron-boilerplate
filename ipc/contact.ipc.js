@@ -1,62 +1,82 @@
-const { v4: uuidv4 } = require("uuid");
+const { Op } = require("sequelize");
 
-exports.contactIpc = async (ipcMain, contactDb) => {
+exports.contactIpc = async (ipcMain, Contact, ContactImage) => {
   ipcMain.handle("delete-contact", async (event, value) => {
-    const result = await contactDb.run(
-      `UPDATE contact SET deleteAt = DATE() where id = ?`,
-      value.id
+    await Contact.update(
+      { deletedAt: new Date() },
+      {
+        where: {
+          id: value.id,
+        },
+      }
     );
     return {
       statusCode: 200,
       message: "Success delete data contact",
-      data: result,
     };
   });
 
   ipcMain.handle("update-contact", async (event, value) => {
-    const result = await contactDb.run(
-      `UPDATE contact SET email = ?, name = ? WHERE id = ?`,
-      [value.email, value.name, value.id]
+    await Contact.update(
+      {
+        name: value.name,
+        email: value.email,
+        gender: value.gender,
+        phoneNumber: value.phoneNumber,
+      },
+      {
+        where: {
+          id: value.id,
+        },
+      }
     );
     return {
       statusCode: 200,
       message: "Success update data contact",
-      data: result,
     };
   });
 
   ipcMain.handle("create-contact", async (event, value) => {
-    const result = await contactDb.run(
-      `INSERT INTO contact (id, email, name) VALUES (?, ?, ?)`,
-      [uuidv4(), value.email, value.name]
-    );
+    const contactImage = ContactImage.build({
+      filename: "test",
+      originalName: "testi",
+      mimeType: "image/jpeg",
+    });
+    await contactImage.save();
+    const contact = Contact.build({
+      name: value.name,
+      email: value.email,
+      gender: value.gender,
+      phoneNumber: value.phoneNumber,
+      imageId: contactImage.id,
+    });
+    await contact.save();
     return {
       statusCode: 200,
       message: "Success create data contact",
-      data: result,
     };
   });
 
   ipcMain.handle("get-contact", async (event, value) => {
-    const contacts = await contactDb.all(
-      `SELECT * FROM contact WHERE deleteAt is NULL`
-    );
+    const { count, rows } = await Contact.findAndCountAll({
+      where: { deletedAt: { [Op.is]: null } },
+    });
+    const result = rows?.map((res) => res.dataValues);
     return {
       statusCode: 200,
       message: "Success get data contact",
-      data: contacts,
+      data: { data: result, count },
     };
   });
 
   ipcMain.handle("get-one-contact", async (event, value) => {
-    const contacts = await contactDb.all(
-      `SELECT * FROM contact WHERE id = ? AND deleteAt is NULL`,
-      [value.id]
-    );
+    const contacts = await Contact.findOne({
+      where: { id: value.id, deletedAt: { [Op.is]: null } },
+    });
     return {
       statusCode: 200,
       message: "Success get data contact",
-      data: contacts[0],
+      data: contacts?.dataValues ?? {},
     };
   });
 };

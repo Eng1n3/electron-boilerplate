@@ -9,10 +9,11 @@ datasource contact {
 }
 
 model contact {
-  id        String    @id @default(uuid())
-  email     String
-  name      String
-  createdAt DateTime  @default(now())
-  updateAt  DateTime?
-  deleteAt  DateTime?
+  id           String    @id @default(uuid())
+  email        String
+  name         String
+  phoneNumber Int?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime?
+  deletedAt    DateTime?
 }

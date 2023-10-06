@@ -1,12 +1,12 @@
 {
   "name": "contact-app-electron",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Contact Management App",
   "main": "main.js",
   "scripts": {
     "install:all": "concurrently \"cd app && npm install\" \"npm install\"",
     "start:dev:win": "concurrently \"cd app && cross-env NODE_ENV=dev npm run dev\" \"cross-env NODE_ENV=dev electronmon .\"",
-    "start:dev:linux": "concurrently \"cd app && NODE_ENV=dev npm run dev\" \"NODE_ENV=dev electronmon .\"",
+    "start:dev:linux": "concurrently \"cd app && NODE_ENV=dev npm run dev\" \"NODE_ENV=dev electron .\"",
     "build:front:dev:win": "cd app && cross-env NODE_ENV=dev && npm run build",
     "build:front:dev:linux": "cd app && NODE_ENV=dev npm run build",
     "build:front": "cd app && npm run build",
@@ -36,6 +36,7 @@
     "@prisma/client": "^5.3.1",
     "electron-builder": "^24.6.4",
     "electron-squirrel-startup": "^1.0.0",
+    "sequelize": "^6.33.0",
     "sqlite": "^5.0.1",
     "sqlite3": "^5.1.6",
     "url": "^0.11.3",

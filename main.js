@@ -1,10 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
-const { contactIpc, contactIpcWindow } = require("./ipc/contact.ipc");
-const SqliteDb = require("./connections/sqlite.connection");
-
-const sqlite = SqliteDb.getInstance();
+const { contactIpc } = require("./ipc/contact.ipc");
+const { Contact, ContactImage, sequelize } = require("./models/contact.model");
 
 const isDev = process.env.NODE_ENV === "dev";
 
@@ -30,15 +28,14 @@ function createWindow() {
   } else {
     win.loadURL(startUrl);
   }
+
+  return win;
 }
 
 (async () => {
   await app.whenReady();
-  createWindow();
-  const contactDb = await sqlite.connectionContact;
-  const dapobudLocalDb = await sqlite.connectionDapobudLocal;
-  const dapobudServerDb = await sqlite.connectionDapobudServer;
-  await contactIpc(ipcMain, contactDb);
+  const mainWindow = await createWindow();
+  await contactIpc(ipcMain, Contact, ContactImage);
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
@@ -47,9 +44,7 @@ function createWindow() {
 })();
 
 app.on("window-all-closed", async () => {
-  await sqlite.connectionContact.close();
-  await sqlite.connectionDapobudLocal.close();
-  await sqlite.connectionDapobudServer.close();
+  sequelize.close()
   if (process.platform !== "darwin") {
     app.quit();
   }
