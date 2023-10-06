@@ -1,8 +1,8 @@
 import * as z from "zod";
 
-const maxFileSize = 5 * 1024;
+const maxFileSize = 5 * 1024 * 1024;
 const maxFileSizeInMb = 5;
-const maxImageSize = 1 * 1024;
+const maxImageSize = 1 * 1024 * 1024;
 const maxImageSizeInMb = 1;
 
 const longMaxChar = 250;

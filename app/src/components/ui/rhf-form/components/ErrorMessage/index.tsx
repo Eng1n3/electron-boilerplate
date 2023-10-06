@@ -7,8 +7,9 @@ const ErrorMessage = (props: TextProps & { children?: string }) => {
   if (!children?.length) return null;
   return (
     <Text
+      mt={0}
       weight={500}
-      size="sm"
+      size="xs"
       style={{
         wordBreak: "break-word",
         display: "block",
@@ -17,7 +18,7 @@ const ErrorMessage = (props: TextProps & { children?: string }) => {
       {...rest}
     >
       <Group spacing={5} sx={{ position: "absolute" }}>
-        <IconAlertCircle width={theme.fontSizes.lg} />
+        <IconAlertCircle width={theme.fontSizes.lg} size={14} />
         {children}
       </Group>
     </Text>
