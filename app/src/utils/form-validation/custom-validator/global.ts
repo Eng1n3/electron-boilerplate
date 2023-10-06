@@ -76,7 +76,7 @@ export const zImage = z
     message: `File size must be less than ${maxImageSizeInMb} MB`,
   });
 
-export const zImageOptional = z.union([zImage, z.null()]);
+export const zImageOptional = z.union([zImage, z.null(), z.undefined()]);
 
 export const zFile = z
   .custom<File>()

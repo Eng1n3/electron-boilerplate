@@ -5,7 +5,6 @@ import {
   zEmail,
   zImage,
   zImageOptional,
-  zLongString,
   zNumberRequired,
   zRequiredString,
   zString,
